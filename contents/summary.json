@@ -1,0 +1,26 @@
+{
+  "fileMap": {
+    "contents/json/story_1.json": {
+      "title": "記事のタイトル",
+      "created_at": "2019-06-20T00:00:00.000Z",
+      "dir": "contents/json",
+      "base": "story_1.json",
+      "ext": ".json",
+      "sourceBase": "story_1.md",
+      "sourceExt": ".md"
+    },
+    "contents/json/story_2.json": {
+      "title": "記事のタイトル",
+      "created_at": "2019-06-20T00:00:00.000Z",
+      "dir": "contents/json",
+      "base": "story_2.json",
+      "ext": ".json",
+      "sourceBase": "story_2.md",
+      "sourceExt": ".md"
+    }
+  },
+  "sourceFileArray": [
+    "contents/posts/story_1.md",
+    "contents/posts/story_2.md"
+  ]
+}

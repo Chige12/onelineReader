@@ -16,7 +16,11 @@ export default {
 </script>
 
 <style>
-html,body{
+html{
   margin: 0;
+}
+body{
+  margin: 0;
+  position: relative;
 }
 </style>

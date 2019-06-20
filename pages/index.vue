@@ -10,6 +10,11 @@ export default {
   components:{
     Whiteout
   },
+  data(){
+    return {
+      storis: "hoge"
+    }
+  },
   mounted(){
   }
 }

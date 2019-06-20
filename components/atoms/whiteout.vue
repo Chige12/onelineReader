@@ -1,6 +1,6 @@
 <template>
   <div class="whiteout" v-if="whiteout">
-    <div class="whiteout_upper" id="whiteout_upper"></div>
+    <div class="whiteout_upper" id="whiteout_upper" :style="{marginTop:`${-(crackPx/2)}px`,marginBottom:`${crackPx}px`}"></div>
     <div class="whiteout_under" id="whiteout_under"></div>
   </div>
 </template>
@@ -8,8 +8,14 @@
 export default {
   data(){
     return {
-      whiteout: true,
-      crack_px: 16
+    }
+  },
+  computed: {
+    whiteout () {
+      return this.$store.state.whiteout
+    },
+    crackPx () {
+      return this.$store.state.crack_px
     }
   },
   mounted(){
@@ -20,17 +26,16 @@ export default {
   methods:{
     KeyDown(event){
       if (event.key === 'w'){
-        this.whiteout = this.whiteout ? false : true
+        this.$store.commit('toggleWhiteOut')
       }
       if (event.key === '['){
-        this.crack_px += 2
+        this.$store.commit('ChangeCrack', this.$store.state.crack_px + 2)
       }
       if (event.key === ']'){
-        this.crack_px -= 2
+        if(this.$store.state.crack_px > 0){
+          this.$store.commit('ChangeCrack', this.$store.state.crack_px - 2)
+        }
       }
-    },
-    ChangeCrackSize(){
-
     }
   }
 }
@@ -38,6 +43,11 @@ export default {
 
 <style lang="scss" scoped>
 .whiteout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   z-index: 2;
 }
 .whiteout_upper{
