@@ -17,7 +17,13 @@ export default {
     }
   },
   mounted(){
-    this.storislist = Object.entries(summaryJson.fileMap).map(([key, value]) => ({key, ...value}))
+    var summaryJsonMap = Object.entries(summaryJson.fileMap).map(([key, value]) => ({key, ...value}))
+    this.storislist = summaryJsonMap.sort(function(a,b){
+      if(a.key < b.key) return -1;
+      if(a.key > b.key) return 1;
+      return 0;
+    });
+
     window.addEventListener('keydown', (e) => {
       this.KeyDown(e)
     })
