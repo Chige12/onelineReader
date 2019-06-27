@@ -11,7 +11,7 @@ import Menu from '~/components/organisms/Menu.vue'
 export default {
   components: {
     Menu
-  }
+  },
 }
 </script>
 

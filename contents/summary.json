@@ -1,23 +1,25 @@
 {
   "fileMap": {
-    "contents/json/story_2.json": {
-      "title": "記事のタイトル",
-      "created_at": "2019-06-20T00:00:00.000Z",
-      "dir": "contents/json",
-      "base": "story_2.json",
-      "ext": ".json",
-      "sourceBase": "story_2.md",
-      "sourceExt": ".md"
-    },
     "contents/json/story_1.json": {
       "title": "ある賭け事",
       "created_at": "2019-06-20T00:00:00.000Z",
       "link": "https://kakuyomu.jp/works/1177354054880314308/episodes/1177354054880314646",
-      "writer": "\\@comsick",
+      "writer": "＠comsick",
       "dir": "contents/json",
       "base": "story_1.json",
       "ext": ".json",
       "sourceBase": "story_1.md",
+      "sourceExt": ".md"
+    },
+    "contents/json/story_2.json": {
+      "title": "生物の届け物",
+      "created_at": "2019-06-25T00:00:00.000Z",
+      "link": "https://kakuyomu.jp/works/1177354054880314308/episodes/1177354054880654237",
+      "writer": "＠comsick",
+      "dir": "contents/json",
+      "base": "story_2.json",
+      "ext": ".json",
+      "sourceBase": "story_2.md",
       "sourceExt": ".md"
     }
   },

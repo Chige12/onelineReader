@@ -16,6 +16,10 @@ export default {
     }
   },
   mounted(){
+    window.addEventListener('keydown', (e) => {
+        console.log(e.key)
+        this.$store.dispatch('KeyDown',e)
+    })
   }
 }
 </script>

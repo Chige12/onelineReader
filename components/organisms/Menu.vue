@@ -23,10 +23,6 @@ export default {
       if(a.key > b.key) return 1;
       return 0;
     });
-
-    window.addEventListener('keydown', (e) => {
-      this.KeyDown(e)
-    })
   },
   computed: {
     menuDisplay () {
@@ -36,14 +32,6 @@ export default {
       return this.$store.state.crack_px
     }
   },
-  methods:{
-    KeyDown(event){
-      console.log(event.key)
-      if (event.key === 'm'){
-        this.$store.commit('toggleMenuDisplay')
-      }
-    }
-  }
 }
 </script>
 

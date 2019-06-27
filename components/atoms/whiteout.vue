@@ -12,30 +12,11 @@ export default {
   },
   computed: {
     whiteout () {
+      console.log("hoge3")
       return this.$store.state.whiteout
     },
     crackPx () {
       return this.$store.state.crack_px
-    }
-  },
-  mounted(){
-    window.addEventListener('keydown', (e) => {
-      this.KeyDown(e)
-    })
-  },
-  methods:{
-    KeyDown(event){
-      if (event.key === 'w'){
-        this.$store.commit('toggleWhiteOut')
-      }
-      if (event.key === '['){
-        this.$store.commit('ChangeCrack', this.$store.state.crack_px + 2)
-      }
-      if (event.key === ']'){
-        if(this.$store.state.crack_px > 0){
-          this.$store.commit('ChangeCrack', this.$store.state.crack_px - 2)
-        }
-      }
     }
   }
 }
