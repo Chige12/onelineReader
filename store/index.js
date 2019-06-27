@@ -17,7 +17,7 @@ export const mutations = {
 }
 
 export const actions = {
-  KeyDown({ commit },event){
+  KeyDown({ commit,state },event){
     if (event.key === 'm'){
       commit('toggleMenuDisplay') 
     }
@@ -25,7 +25,7 @@ export const actions = {
       commit('toggleWhiteOut')
     }
     if (event.key === '['){
-      commit('ChangeCrack', state.crack_px + 2)
+        commit('ChangeCrack', state.crack_px + 2)
     }
     if (event.key === ']'){
       if(state.crack_px > 0){

@@ -39,7 +39,11 @@ export default {
     for (let i = 0; i < this.rowlist.length; i++) {
       this.rowlist[i].setAttribute("id",`pg_${i}`);
     }
-    window.addEventListener('keydown', (e)=>{this.KeydownEvent(e)})
+  },
+  created(){
+    if (process.browser) {
+      window.addEventListener('keydown', (e)=>{this.KeydownEvent(e)})
+    }
   },
   destroyed(){
     window.removeEventListener("keydown", (e)=>{this.KeydownEvent(e)})
