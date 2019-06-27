@@ -22,7 +22,9 @@ export default {
   },
   data(){
     return {
-      nowrow:null
+      nowrow:null,
+      rowlist:[],
+      whiteupperH:0
     }
   },
   validate({ params }) {
@@ -32,48 +34,47 @@ export default {
     return Object.assign({}, require(`~/contents/json/${params.story}.json`), { params });
   },
   mounted(){
-    this.$nextTick(() => {
-      let rowlist = this.$refs.documentBody.getElementsByTagName('p')
-      let whiteupperH = document.getElementById('whiteout_upper').clientHeight
-      for (let i = 0; i < rowlist.length; i++) {
-        rowlist[i].setAttribute("id",`pg_${i}`);
-      }
-      console.log(rowlist)
-      window.addEventListener('keydown', (e) => {
-        console.log(e.key)
-        this.$store.dispatch('KeyDown',e)
-
-        if(e.key === 'ArrowUp'){
-          this.arrowScrollUp(rowlist,e,whiteupperH)
-        }
-        if(e.key === 'ArrowDown'){
-          e.preventDefault();
-          this.arrowScrollDown(rowlist,e,whiteupperH)
-        }
-        console.log(this.nowrow)
-      })
-    })
+    this.rowlist = this.$refs.documentBody.getElementsByTagName('p')
+    this.whiteupperH = document.getElementById('whiteout_upper').clientHeight
+    for (let i = 0; i < this.rowlist.length; i++) {
+      this.rowlist[i].setAttribute("id",`pg_${i}`);
+    }
+    window.addEventListener('keydown', (e)=>{this.KeydownEvent(e)})
+  },
+  destroyed(){
+    window.removeEventListener("keydown", (e)=>{this.KeydownEvent(e)})
   },
   methods:{
-    arrowScrollUp(rowlist,e,whiteupperH){
+    KeydownEvent(e) {
+      this.$store.dispatch('KeyDown',e)
+
+      if(e.key === 'ArrowUp'){
+        this.arrowScrollUp(e)
+      }
+      if(e.key === 'ArrowDown'){
+        e.preventDefault();
+        this.arrowScrollDown(e)
+      }
+    },
+    arrowScrollUp(e){
       if(this.nowrow === 0){
         this.nowrow = null
       }
       if(this.nowrow > 0){
         e.preventDefault();
-        this.$scrollTo(`#pg_${this.nowrow-1}`,100,{offset : -whiteupperH+(rowlist[this.nowrow-1].clientHeight/2)})
-        console.log(rowlist[this.nowrow-1].clientHeight/2)
+        this.$scrollTo(`#pg_${this.nowrow-1}`,100,{offset : -this.whiteupperH+(this.rowlist[this.nowrow-1].clientHeight/2)})
+        console.log(this.rowlist[this.nowrow-1].clientHeight/2)
         this.nowrow--
       }
     },
-    arrowScrollDown(rowlist,e,whiteupperH){
+    arrowScrollDown(e){
       if(this.nowrow === null){
-        this.$scrollTo(`#pg_0`,100,{offset : -whiteupperH+(rowlist[0].clientHeight/2)})
-        console.log(rowlist[0].clientHeight/2)
+        this.$scrollTo(`#pg_0`,100,{offset : -this.whiteupperH+(this.rowlist[0].clientHeight/2)})
+        console.log(this.rowlist[0].clientHeight/2)
         this.nowrow = 0
-      }else if(0 <= this.nowrow && this.nowrow < rowlist.length-1){
-        this.$scrollTo(`#pg_${this.nowrow+1}`,100,{offset : -whiteupperH+(rowlist[this.nowrow+1].clientHeight/2)})
-        console.log(rowlist[this.nowrow+1].clientHeight/2)
+      }else if(0 <= this.nowrow && this.nowrow < this.rowlist.length-1){
+        this.$scrollTo(`#pg_${this.nowrow+1}`,100,{offset : -this.whiteupperH+(this.rowlist[this.nowrow+1].clientHeight/2)})
+        console.log(this.rowlist[this.nowrow+1].clientHeight/2)
         this.nowrow++
       }
     }

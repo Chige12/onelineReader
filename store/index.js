@@ -7,7 +7,6 @@ export const state = () => ({
 export const mutations = {
   toggleWhiteOut (state) {
     state.whiteout = !state.whiteout
-    console.log("hoge2")
   },
   toggleMenuDisplay (state) {
     state.menuDisplay = !state.menuDisplay
@@ -24,7 +23,6 @@ export const actions = {
     }
     if (event.key === 'w'){
       commit('toggleWhiteOut')
-      console.log("hoge")
     }
     if (event.key === '['){
       commit('ChangeCrack', state.crack_px + 2)
