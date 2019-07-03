@@ -9,16 +9,19 @@
       </div>
     </div>
     <Whiteout/>
+    <StopWatch @reset="reset"/>
   </div>
 </template>
 
 <script>
+import StopWatch from '~/components/atoms/stopWatch.vue'
 import Whiteout from '~/components/atoms/whiteout.vue'
 import summaryJson from '~/contents/summary.json'
 import { SlowBuffer } from 'buffer';
 export default {
   components:{
-    Whiteout
+    Whiteout,
+    StopWatch
   },
   data(){
     return {
@@ -42,13 +45,18 @@ export default {
   },
   created(){
     if (process.browser) {
-      window.addEventListener('keydown', (e)=>{this.KeydownEvent(e)})
+      window.addEventListener('keydown', this.KeydownEvent)
     }
   },
-  destroyed(){
-    window.removeEventListener("keydown", (e)=>{this.KeydownEvent(e)})
+  beforeDestroy(){
+    if (process.browser) {
+      window.removeEventListener("keydown", this.KeydownEvent)
+    }
   },
   methods:{
+    reset(){
+      this.nowrow = null
+    },
     KeydownEvent(e) {
       this.$store.dispatch('KeyDown',e)
 
@@ -61,26 +69,30 @@ export default {
       }
     },
     arrowScrollUp(e){
+      let height
       if(this.nowrow === 0){
         this.nowrow = null
       }
       if(this.nowrow > 0){
         e.preventDefault();
-        this.$scrollTo(`#pg_${this.nowrow-1}`,100,{offset : -this.whiteupperH+(this.rowlist[this.nowrow-1].clientHeight/2)})
-        console.log(this.rowlist[this.nowrow-1].clientHeight/2)
+        height = this.rowlist[this.nowrow-1].clientHeight/2
+        this.$scrollTo(`#pg_${this.nowrow-1}`,100,{offset : -this.whiteupperH+height})
         this.nowrow--
       }
+      this.$store.commit('Timer',{key:"ScrollUp",row:this.nowrow,height:height})
     },
     arrowScrollDown(e){
+      let height
       if(this.nowrow === null){
-        this.$scrollTo(`#pg_0`,100,{offset : -this.whiteupperH+(this.rowlist[0].clientHeight/2)})
-        console.log(this.rowlist[0].clientHeight/2)
+        height = this.rowlist[0].clientHeight/2
+        this.$scrollTo(`#pg_0`,100,{offset : -this.whiteupperH+(height)})
         this.nowrow = 0
       }else if(0 <= this.nowrow && this.nowrow < this.rowlist.length-1){
-        this.$scrollTo(`#pg_${this.nowrow+1}`,100,{offset : -this.whiteupperH+(this.rowlist[this.nowrow+1].clientHeight/2)})
-        console.log(this.rowlist[this.nowrow+1].clientHeight/2)
+        height = this.rowlist[this.nowrow+1].clientHeight/2
+        this.$scrollTo(`#pg_${this.nowrow+1}`,100,{offset : -this.whiteupperH+(height)})
         this.nowrow++
       }
+      this.$store.commit('Timer',{key:"ScrollDown",row:this.nowrow,height:height})
     }
   }
 }

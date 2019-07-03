@@ -1,7 +1,9 @@
 export const state = () => ({
   whiteout: true,
   menuDisplay: false,
-  crack_px: 16
+  timerDisplay: false,
+  crack_px: 16,
+  lessdata:null,
 })
 
 export const mutations = {
@@ -11,8 +13,14 @@ export const mutations = {
   toggleMenuDisplay (state) {
     state.menuDisplay = !state.menuDisplay
   },
+  toggleTimerDisplay(state){
+    state.timerDisplay = !state.timerDisplay
+  },
   ChangeCrack(state,px) {
     state.crack_px = px
+  },
+  Timer(state,lessdata){
+    state.lessdata = lessdata
   }
 }
 
@@ -23,6 +31,9 @@ export const actions = {
     }
     if (event.key === 'w'){
       commit('toggleWhiteOut')
+    }
+    if (event.key === 't'){
+      commit('toggleTimerDisplay') 
     }
     if (event.key === '['){
         commit('ChangeCrack', state.crack_px + 2)
