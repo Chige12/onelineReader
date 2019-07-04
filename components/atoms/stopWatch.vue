@@ -53,16 +53,6 @@ export default {
             return this.$store.state.questionData
         }
     },
-    created(){
-        if (process.browser) {
-            window.addEventListener('keydown', this.KeydownEvent)
-        }
-    },
-    beforeDestroy(){
-        if (process.browser) {
-            window.removeEventListener("keydown", this.KeydownEvent)
-        }
-    },
     mounted() {
         const unwatch = this.$store.watch(
             state => state.lessdata,
