@@ -9,6 +9,10 @@ question_2: 博士と助手が生み出した生き物はどのような見た�
 answer_2: 非常に醜い
 question_3: 博士と助手が生み出した生き物は最終的にどこへ送られましたか？
 answer_3: 地球
+
+word_count_space: 965
+word_count: 961
+paragraphs: 26
 ---
 
 「うーん」

@@ -50,6 +50,15 @@ export default {
         questionNumber++
       }
       this.$store.commit('questionData',questionArray)
+
+      let storyData = {
+        id: this.$route.params.story,
+        title: this.title,
+        word_count_space: this.word_count_space,
+        word_count: this.word_count,
+        paragraphs: this.paragraphs,
+      }
+      this.$store.commit('storyData',storyData)
     })
   },
   created(){

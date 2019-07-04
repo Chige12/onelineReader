@@ -49,9 +49,8 @@ export default {
             return this.$store.state.timerDisplay
         },
         questionData(){
-            console.log(this.$store.state.questionData)
             return this.$store.state.questionData
-        }
+        },
     },
     mounted() {
         const unwatch = this.$store.watch(
@@ -98,12 +97,13 @@ export default {
 
             let whiteoutData = this.$store.state.whiteout
             let crack_pxData = this.$store.state.crack_px
+            let storyData = this.$store.state.storyData
             let judgmentData = this.judgment()
-            let testFileData = { name:this.name, data:this.data,whiteout:whiteoutData, crack_px:crack_pxData, judgment:judgmentData}
+            let testFileData = { name:this.name, data:this.data, whiteout:whiteoutData, crack_px:crack_pxData, judgment:judgmentData, story:storyData}
 
             var resultJson = JSON.stringify(testFileData);
             var downLoadLink = document.createElement("a");
-            downLoadLink.download = `${todayText}_${this.name}.json`;
+            downLoadLink.download = `${todayText}_${storyData.id}_${this.name}.json`;
             downLoadLink.href = URL.createObjectURL(new Blob([resultJson], {type: "text.plain"}));
             downLoadLink.dataset.downloadurl = ["text/plain", downLoadLink.download, downLoadLink.href].join(":");
             downLoadLink.click();
