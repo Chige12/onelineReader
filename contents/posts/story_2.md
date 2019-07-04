@@ -5,8 +5,8 @@ link: https://kakuyomu.jp/works/1177354054880314308/episodes/1177354054880654237
 writer: ＠comsick
 question_1: 博士と助手が生み出した生き物は何に入れられていましたか？
 answer_1: 透明なケース
-question_2: 博士の頭はいくつありますか？
-answer_2: ４つ
+question_2: 博士と助手が生み出した生き物はどのような見た目でしたか？
+answer_2: 非常に醜い
 question_3: 博士と助手が生み出した生き物は最終的にどこへ送られましたか？
 answer_3: 地球
 ---
