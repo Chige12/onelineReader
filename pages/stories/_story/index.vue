@@ -42,6 +42,15 @@ export default {
     for (let i = 0; i < this.rowlist.length; i++) {
       this.rowlist[i].setAttribute("id",`pg_${i}`);
     }
+    this.$nextTick(() => {
+      let questionArray = []
+      let questionNumber = 1
+      while (eval(`this.question_${questionNumber}`)) {
+        questionArray.push({Q:`${ eval(`this.question_${questionNumber}`) }`, A:`${ eval(`this.answer_${questionNumber}`) }`})
+        questionNumber++
+      }
+      this.$store.commit('questionData',questionArray)
+    })
   },
   created(){
     if (process.browser) {
@@ -67,6 +76,9 @@ export default {
         e.preventDefault();
         this.arrowScrollDown(e)
       }
+      if(e.key === 'Enter'){
+        this.PressEnter()
+      }
     },
     arrowScrollUp(e){
       let height
@@ -79,7 +91,7 @@ export default {
         this.$scrollTo(`#pg_${this.nowrow-1}`,100,{offset : -this.whiteupperH+height})
         this.nowrow--
       }
-      this.$store.commit('Timer',{key:"ScrollUp",row:this.nowrow,height:height})
+      this.$store.commit('updateData',{key:"ScrollUp",row:this.nowrow,height:height})
     },
     arrowScrollDown(e){
       let height
@@ -92,7 +104,10 @@ export default {
         this.$scrollTo(`#pg_${this.nowrow+1}`,100,{offset : -this.whiteupperH+(height)})
         this.nowrow++
       }
-      this.$store.commit('Timer',{key:"ScrollDown",row:this.nowrow,height:height})
+      this.$store.commit('updateData',{key:"ScrollDown",row:this.nowrow,height:height})
+    },
+    PressEnter(){
+      this.$store.commit('updateData',{key:"Enter",row:null,height:null})
     }
   }
 }

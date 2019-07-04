@@ -4,6 +4,7 @@ export const state = () => ({
   timerDisplay: false,
   crack_px: 16,
   lessdata:null,
+  questionData:null
 })
 
 export const mutations = {
@@ -19,8 +20,11 @@ export const mutations = {
   ChangeCrack(state,px) {
     state.crack_px = px
   },
-  Timer(state,lessdata){
+  updateData(state,lessdata){
     state.lessdata = lessdata
+  },
+  questionData(state,data){
+    state.questionData = data
   }
 }
 

@@ -12,7 +12,6 @@ export default {
   },
   computed: {
     whiteout () {
-      console.log("hoge3")
       return this.$store.state.whiteout
     },
     crackPx () {
