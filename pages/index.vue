@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <Whiteout/>
+    <header>
+      <h1>Oneline Reader</h1>
+      <p>一行ずつ読む読書アプリです。</p>
+      <p><a href="https://github.com/Chige12/onelinereader">Github repository</a></p>
+    </header>
   </div>
 </template>
 
