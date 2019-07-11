@@ -5,7 +5,8 @@ export const state = () => ({
   crack_px: 16,
   lessdata:null,
   questionData:null,
-  storyData:null
+  storyData:null,
+  storylist:null
 })
 
 export const mutations = {
@@ -29,6 +30,9 @@ export const mutations = {
   },
   storyData(state,data){
     state.storyData = data
+  },
+  storislist(state,list){
+    state.storylist = list
   }
 }
 

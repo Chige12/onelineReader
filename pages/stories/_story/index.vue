@@ -37,12 +37,12 @@ export default {
     return Object.assign({}, require(`~/contents/json/${params.story}.json`), { params });
   },
   mounted(){
-    this.rowlist = this.$refs.documentBody.getElementsByTagName('p')
-    this.whiteupperH = document.getElementById('whiteout_upper').clientHeight
-    for (let i = 0; i < this.rowlist.length; i++) {
-      this.rowlist[i].setAttribute("id",`pg_${i}`);
-    }
     this.$nextTick(() => {
+      this.rowlist = this.$refs.documentBody.getElementsByTagName('p')
+      this.whiteupperH = document.getElementById('whiteout_upper').clientHeight
+      for (let i = 0; i < this.rowlist.length; i++) {
+        this.rowlist[i].setAttribute("id",`pg_${i}`);
+      }
       let questionArray = []
       let questionNumber = 1
       while (eval(`this.question_${questionNumber}`)) {
