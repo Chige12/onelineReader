@@ -34,8 +34,8 @@
 </template>
 
 <script>
-let Dropbox = require("dropbox").Dropbox;
-let DropboxTeam = require("dropbox").DropboxTeam;
+// let Dropbox = require("dropbox").Dropbox;
+// let DropboxTeam = require("dropbox").DropboxTeam;
 
 export default {
   data() {
