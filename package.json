@@ -14,7 +14,6 @@
     "@nuxtjs/axios": "^5.5.4",
     "@nuxtjs/markdownit": "^1.2.5",
     "axios": "^0.19.0",
-    "dropbox": "^4.0.28",
     "nuxt": "^2.0.0",
     "vue-scrollto": "^2.15.0"
   },

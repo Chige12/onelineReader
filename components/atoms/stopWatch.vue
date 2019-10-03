@@ -52,10 +52,6 @@ export default {
       endform: false,
       timerRun: false,
       questionAnswer: [],
-      dpb: {
-        Appkey: "7wc79cvfsrvcpj3",
-        token: "0XnwYuJIQVEAAAAAAAABmakNvNAonTss9dAp8KeqPoL2ny9k5LRl7thchwZC6tE8"
-      }
     };
   },
   computed: {
@@ -144,9 +140,9 @@ export default {
       };
       let filename = `${todayText}_${storyData.id}_${this.name}.json`;
       var resultJson = JSON.stringify(testFileData);
-      this.fileUpload(resultJson, filename)
-      //this.fileDownload(resultJson, filename);
-      //this.reset();
+      // this.fileUpload(resultJson, filename)
+      this.fileDownload(resultJson, filename);
+      this.reset();
     },
     fileDownload(file, filename) {
       var downLoadLink = document.createElement("a");
@@ -176,19 +172,19 @@ export default {
       // params.append('file', file);
       //this.$axios.$post(`https://www.dropbox.com/oauth2/authorize?client_id=${this.dpb.Appkey}&response_type=code&redirect_uri=http://localhost:3000`)
 
-      this.$axios.$post('https://content.dropboxapi.com/2/files/upload',{
-        data: file,
-        processData: false,
-        contentType: 'application/octet-stream',
-        headers: {
-          "Authorization": "Bearer " + this.dpb.token,
-          "Dropbox-API-Arg": `{"path": "/${filename}","mode": "add","autorename": true,"mute": false}`,
-        }
-      }).then(res => {
-        console.log(res.data.status);
-      }).catch(error => {
-        console.log(error);
-      })
+      // this.$axios.$post('https://content.dropboxapi.com/2/files/upload',{
+      //   data: file,
+      //   processData: false,
+      //   contentType: 'application/octet-stream',
+      //   headers: {
+      //     "Authorization": "Bearer " + this.dpb.token,
+      //     "Dropbox-API-Arg": `{"path": "/${filename}","mode": "add","autorename": true,"mute": false}`,
+      //   }
+      // }).then(res => {
+      //   console.log(res.data.status);
+      // }).catch(error => {
+      //   console.log(error);
+      // })
 
     },
     doWriteFile() {
