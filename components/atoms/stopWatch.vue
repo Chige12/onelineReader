@@ -34,8 +34,6 @@
 </template>
 
 <script>
-// let Dropbox = require("dropbox").Dropbox;
-// let DropboxTeam = require("dropbox").DropboxTeam;
 
 export default {
   data() {
@@ -157,35 +155,6 @@ export default {
       ].join(":");
       console.log(downLoadLink)
       downLoadLink.click();
-    },
-    fileUpload(file,filename) {
-      // var client = new Dropbox.Client({ key: this.dpb.Appkey });
-      // // AOuth認証を実行
-      // client.authenticate({ interactive: false }, function(error) {
-      //   if (error) {
-      //     alert("Error: " + error);
-      //   } else {
-      //     console.log("authorized successfully");
-      //   }
-      // });
-      // let params = new FormData();
-      // params.append('file', file);
-      //this.$axios.$post(`https://www.dropbox.com/oauth2/authorize?client_id=${this.dpb.Appkey}&response_type=code&redirect_uri=http://localhost:3000`)
-
-      // this.$axios.$post('https://content.dropboxapi.com/2/files/upload',{
-      //   data: file,
-      //   processData: false,
-      //   contentType: 'application/octet-stream',
-      //   headers: {
-      //     "Authorization": "Bearer " + this.dpb.token,
-      //     "Dropbox-API-Arg": `{"path": "/${filename}","mode": "add","autorename": true,"mute": false}`,
-      //   }
-      // }).then(res => {
-      //   console.log(res.data.status);
-      // }).catch(error => {
-      //   console.log(error);
-      // })
-
     },
     doWriteFile() {
       client.authenticate(function(error, client) {
