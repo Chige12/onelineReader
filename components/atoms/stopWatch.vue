@@ -17,19 +17,26 @@
             <div v-for="(question,question_id) in questionData" :key="`question-${question_id}`">
               <p>
                 {{question.Q}}
-                <input type="text" v-model="questionAnswer[question_id]" placeholder="答え" />
+                <input
+                  type="text"
+                  v-model="questionAnswer[question_id]"
+                  placeholder="答え"
+                />
               </p>
             </div>
           </div>
-          <button @click="fileDownload">決定</button>
-          <button @click="reset">キャンセル</button>
         </form>
+          <button @click="fileParse">決定</button>
+          <button @click="reset">キャンセル</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+let Dropbox = require("dropbox").Dropbox;
+let DropboxTeam = require("dropbox").DropboxTeam;
+
 export default {
   data() {
     return {
@@ -44,7 +51,11 @@ export default {
       name: "",
       endform: false,
       timerRun: false,
-      questionAnswer: []
+      questionAnswer: [],
+      dpb: {
+        Appkey: "7wc79cvfsrvcpj3",
+        token: "0XnwYuJIQVEAAAAAAAABmakNvNAonTss9dAp8KeqPoL2ny9k5LRl7thchwZC6tE8"
+      }
     };
   },
   computed: {
@@ -60,12 +71,12 @@ export default {
       state => state.lessdata,
       lessdata => {
         let nowtime = this.timer;
-        let nowrow = document.getElementById(`pg_${lessdata.row}`)
-        let word
-        if(nowrow){
+        let nowrow = document.getElementById(`pg_${lessdata.row}`);
+        let word;
+        if (nowrow) {
           word = nowrow.innerText.length;
-        }else{
-          word = null
+        } else {
+          word = null;
         }
         this.data.push({ ...lessdata, time: nowtime, word: word });
         if (lessdata.key === "Enter") {
@@ -85,8 +96,16 @@ export default {
           this.once++;
           this.row = lessdata.row;
           console.log(
-            "Key : " +lessdata.key +"\nRow : " +lessdata.row +
-            "\nHeight : " +lessdata.height +"\nTime : " +nowtime +"\nWord : " +word
+            "Key : " +
+              lessdata.key +
+              "\nRow : " +
+              lessdata.row +
+              "\nHeight : " +
+              lessdata.height +
+              "\nTime : " +
+              nowtime +
+              "\nWord : " +
+              word
           );
         }
       }
@@ -106,7 +125,7 @@ export default {
       }
       return judgment;
     },
-    fileDownload() {
+    fileParse() {
       let today = new Date();
       let todayText = `${today.getFullYear()}-${today.getMonth() +
         1}-${today.getDate()}_${today.getHours()}-${today.getMinutes()}`;
@@ -123,21 +142,69 @@ export default {
         judgment: judgmentData,
         story: storyData
       };
-
+      let filename = `${todayText}_${storyData.id}_${this.name}.json`;
       var resultJson = JSON.stringify(testFileData);
+      this.fileUpload(resultJson, filename)
+      //this.fileDownload(resultJson, filename);
+      //this.reset();
+    },
+    fileDownload(file, filename) {
       var downLoadLink = document.createElement("a");
-      downLoadLink.download = `${todayText}_${storyData.id}_${this.name}.json`;
+      downLoadLink.download = filename;
       downLoadLink.href = URL.createObjectURL(
-        new Blob([resultJson], { type: "text.plain" })
+        new Blob([file], { type: "text.plain" })
       );
       downLoadLink.dataset.downloadurl = [
         "text/plain",
         downLoadLink.download,
         downLoadLink.href
       ].join(":");
+      console.log(downLoadLink)
       downLoadLink.click();
+    },
+    fileUpload(file,filename) {
+      // var client = new Dropbox.Client({ key: this.dpb.Appkey });
+      // // AOuth認証を実行
+      // client.authenticate({ interactive: false }, function(error) {
+      //   if (error) {
+      //     alert("Error: " + error);
+      //   } else {
+      //     console.log("authorized successfully");
+      //   }
+      // });
+      // let params = new FormData();
+      // params.append('file', file);
+      //this.$axios.$post(`https://www.dropbox.com/oauth2/authorize?client_id=${this.dpb.Appkey}&response_type=code&redirect_uri=http://localhost:3000`)
 
-      this.reset();
+      this.$axios.$post('https://content.dropboxapi.com/2/files/upload',{
+        data: file,
+        processData: false,
+        contentType: 'application/octet-stream',
+        headers: {
+          "Authorization": "Bearer " + this.dpb.token,
+          "Dropbox-API-Arg": `{"path": "/${filename}","mode": "add","autorename": true,"mute": false}`,
+        }
+      }).then(res => {
+        console.log(res.data.status);
+      }).catch(error => {
+        console.log(error);
+      })
+
+    },
+    doWriteFile() {
+      client.authenticate(function(error, client) {
+        if (error) {
+          alert("Error: " + error);
+        } else {
+          client.writeFile("hello.txt", "Hello, World!", function(error) {
+            if (error) {
+              alert("Error: " + error);
+            } else {
+              alert("File written successfully!");
+            }
+          });
+        }
+      });
     },
     updateTimerText() {
       //m(分) = 135200 / 60000ミリ秒で割った数の商　-> 2分

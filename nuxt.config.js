@@ -34,7 +34,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    '@nuxtjs/axios'
   ],
   markdownit: {
     injected: true, // $mdを利用してmarkdownをhtmlにレンダリングする
