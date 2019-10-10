@@ -119,11 +119,16 @@ export default {
       }
       return judgment;
     },
+    yyyymmddhhmi() {
+      let date = new Date();
+      let yyyy = date.getFullYear();
+      let mm = ("0"+date.getMonth()).slice(-2);
+      let dd = ("0"+date.getDate()).slice(-2);
+      let hh = ("0"+date.getHours()).slice(-2);
+      let mi = ("0"+date.getMinutes()).slice(-2);
+      return `${yyyy}-${mm}-${dd}_${hh}-${mi}`
+    },
     fileParse() {
-      let today = new Date();
-      let todayText = `${today.getFullYear()}-${today.getMonth() +
-        1}-${today.getDate()}_${today.getHours()}-${today.getMinutes()}`;
-
       let whiteoutData = this.$store.state.whiteout;
       let crack_pxData = this.$store.state.crack_px;
       let storyData = this.$store.state.storyData;
@@ -136,6 +141,7 @@ export default {
         judgment: judgmentData,
         story: storyData
       };
+      let todayText = this.yyyymmddhhmi();
       let filename = `${todayText}_${storyData.id}_${this.name}.json`;
       var resultJson = JSON.stringify(testFileData);
       // this.fileUpload(resultJson, filename)
