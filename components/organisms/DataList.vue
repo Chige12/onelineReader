@@ -50,7 +50,7 @@
       </tr>
       <tr class="table_row_detail" v-for="(jud,jud_id) in file.judgment" :key="`judgmentKey-${jud_id}`">
         <td></td>
-        <td>{{jud.model}}</td>
+        <td>{{jud.Model}}</td>
         <td>{{jud.Answer}}</td>
         <td></td><td></td><td></td><td></td>
       </tr>
