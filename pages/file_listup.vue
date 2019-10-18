@@ -1,6 +1,8 @@
 <template>
   <div>
-    <input type="file" id="files" name="files[]" multiple @change="handleFileSelect"/>
+    <div style="margin:auto;width:80%;">
+      <v-file-input label="File input" multiple key="jsonfile" id="files" @change="handleFileSelect"></v-file-input>
+    </div>
 
     <div class="table_wrapper" v-for="(file,file_id) in sortedFileData" :key="`fileKey-${file_id}`">
       <DataList :file="file" :file_id="file_id"/>
@@ -9,6 +11,7 @@
 </template>
 <script>
 import DataList from '~/components/organisms/DataList.vue'
+import { isObject } from 'util';
 
 export default {
   components:{
@@ -16,67 +19,61 @@ export default {
   },
   data() {
     return {
-      fileData: []
+      fileinput_text: "jsonファイルを読み込む"
     };
   },
   computed:{
     sortedFileData(){
-      var sortedArray = this.fileData.sort(compare);
-      function compare(a, b) {
-        const A = a.fileName
-        const B = b.fileName
-        let comparison = 0;
-        if (A > B) { comparison = 1; }
-        else if ( A < B ) { comparison = -1; }
-        return comparison;
-      }
-      return sortedArray
+      return this.$store.getters['listup/sorted_filename']
     }
   },
   methods: {
-    handleFileSelect(evt) {
-      var files = evt.target.files;
-      for (var i = 0, f; (f = files[i]); i++) {
-        if(f.type==="application/json"){
-          var reader = new FileReader();
-          reader.onload = ((theFile) => {
-            return (e) => {
-              let b64 = e.target.result.split(',')[1]
-              let b =  window.atob(b64);
-              let bytes = stringToByteArray(b);
-
-              function buffer_to_string(buf) {
-                return String.fromCharCode.apply("", new Uint8Array(buf))
-              }
-              function large_buffer_to_string(buf) {
-                var tmp = [];
-                var len = 1024;
-                for (var p = 0; p < buf.byteLength; p += len) {
-                  tmp.push(buffer_to_string(buf.slice(p, p + len)));
-                }
-                return tmp.join("");
-              }
-              
-              var ISO_8859_1 = large_buffer_to_string(bytes);
-              var json = decodeURIComponent(escape(ISO_8859_1));
-              var obj = JSON.parse(json)
-              obj.fileName = theFile.name
-              this.fileData.push(obj)
-              console.log(this.fileData)
-            };
-          })(f);
-          reader.readAsDataURL(f);
-        }
-        function stringToByteArray(str) {
-          var array = new (window.Uint8Array !== void 0 ? Uint8Array : Array)(str.length);
-          var i, il;
-          for (i = 0, il = str.length; i < il; ++i) {
-            array[i] = str.charCodeAt(i) & 0xff;
-          }
-          return array;
-        }
+    handleFileSelect(files) {
+      let file_names = this.$store.getters['listup/sorted_filename'].map(f => f.fileName);
+      let unique_files = [];
+      for (let i = 0; i < files.length; i++) {
+        if (file_names.indexOf(files[i].name) === -1) {
+          file_names.push(files[i].name);
+          unique_files.push(files[i]);
+        }        
       }
-    }
+
+      let data_list = [];
+      for (let i = 0; i < unique_files.length; i++) {
+        let f = unique_files[i];
+        if (f.type !== "application/json") {
+          continue;
+        }
+
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            let json_data = JSON.parse(e.target.result);
+            json_data.fileName = f.name;
+
+            data_list.push(json_data);
+            if (data_list.length === unique_files.length) {
+              this.$store.commit('listup/file_update', data_list);
+            }
+        }
+        reader.readAsText(f);
+      }
+    },
   }
 };
 </script>
+<style lang="scss" scoped>
+.file_upload {
+  position: relative;
+  display: inline-block;
+  padding: 2px 1em;
+  border: 3px solid;
+}
+.file_upload input[type="file"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+</style>

@@ -29,6 +29,7 @@ export default {
   */
   plugins: [
     '~/plugins/vue-scrollto',
+    '~/plugins/vue-meta',
   ],
   /*
   ** Nuxt.js modules
@@ -56,5 +57,13 @@ export default {
   },
   generate: {
     fallback: true,
+  },
+  devModules: ['@nuxtjs/vuetify'],
+  buildModules: [
+    '@nuxtjs/vuetify'
+  ],
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    defaultAssets: {icons: 'mdiSvg'}
   }
 }
