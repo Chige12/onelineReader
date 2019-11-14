@@ -39,7 +39,8 @@ export default {
   */
   modules: [
     '@nuxtjs/markdownit',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/vuetify'
   ],
   markdownit: {
     injected: true, // $mdを利用してmarkdownをhtmlにレンダリングする
@@ -61,10 +62,6 @@ export default {
   generate: {
     fallback: true,
   },
-  devModules: ['@nuxtjs/vuetify'],
-  buildModules: [
-    '@nuxtjs/vuetify'
-  ],
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     defaultAssets: {icons: 'mdiSvg'},
