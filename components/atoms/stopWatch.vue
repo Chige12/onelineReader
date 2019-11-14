@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="timer" v-if="timerDisplay">
-      <div>{{timer}}</div>
+      <div>{{ timer }}</div>
       <button @click="start()">start</button>
       <button @click="stop()">stop</button>
       <button @click="reset()">reset</button>
@@ -11,29 +11,46 @@
         <h2>お疲れさまでした。</h2>
         <form>
           <h3>名前を入力してください</h3>
-          <input type="text" v-model="name" placeholder="名前" />
+          <v-text-field
+            type="text"
+            v-model="name"
+            placeholder="名前"
+            @change="updateSubjectName()"
+            outlined
+            dense
+          ></v-text-field>
           <div v-if="questionData">
             <h3>以下の質問に答えてください</h3>
-            <div v-for="(question,question_id) in questionData" :key="`question-${question_id}`">
-              <p>
-                {{question.Q}}
-                <input
-                  type="text"
-                  v-model="questionAnswer[question_id]"
-                  placeholder="答え"
-                />
-              </p>
+            <div
+              v-for="(question, question_id) in questionData"
+              :key="`question-${question_id}`"
+            >
+              <div class="question_box">
+                <p class="question_text">
+                  {{ question.Q }}
+                </p>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    type="text"
+                    v-model="questionAnswer[question_id]"
+                    placeholder="答え"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+              </div>
             </div>
           </div>
         </form>
-          <button @click="fileParse">決定</button>
-          <button @click="reset">キャンセル</button>
+        <v-btn color="#64DD17" @click="fileParse">決定</v-btn>
+        <v-btn @click="reset">キャンセル</v-btn>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import colors from "vuetify/lib/util/colors";
 
 export default {
   data() {
@@ -49,7 +66,7 @@ export default {
       name: "",
       endform: false,
       timerRun: false,
-      questionAnswer: [],
+      questionAnswer: []
     };
   },
   computed: {
@@ -108,6 +125,7 @@ export default {
   methods: {
     endTest() {
       this.endform = true;
+      this.name = this.$store.state.listup.subject_name;
     },
     judgment() {
       var judgment = [];
@@ -119,14 +137,17 @@ export default {
       }
       return judgment;
     },
+    updateSubjectName() {
+      this.$store.commit("listup/updateSubjectName", this.name);
+    },
     yyyymmddhhmi() {
       let date = new Date();
       let yyyy = date.getFullYear();
-      let mm = ("0"+date.getMonth()).slice(-2);
-      let dd = ("0"+date.getDate()).slice(-2);
-      let hh = ("0"+date.getHours()).slice(-2);
-      let mi = ("0"+date.getMinutes()).slice(-2);
-      return `${yyyy}-${mm}-${dd}_${hh}-${mi}`
+      let mm = ("0" + date.getMonth()).slice(-2);
+      let dd = ("0" + date.getDate()).slice(-2);
+      let hh = ("0" + date.getHours()).slice(-2);
+      let mi = ("0" + date.getMinutes()).slice(-2);
+      return `${yyyy}-${mm}-${dd}_${hh}-${mi}`;
     },
     fileParse() {
       let whiteoutData = this.$store.state.whiteout;
@@ -159,7 +180,7 @@ export default {
         downLoadLink.download,
         downLoadLink.href
       ].join(":");
-      console.log(downLoadLink)
+      console.log(downLoadLink);
       downLoadLink.click();
     },
     doWriteFile() {
@@ -242,7 +263,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .timer {
   position: fixed;
   top: 0;
@@ -272,5 +293,19 @@ export default {
   overflow-y: overlay;
   padding: 60px;
 }
+.question_box {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  .v-text-field__details {
+    display: none;
+  }
+}
+.question_text {
+  line-height: 2;
+  margin: 12px 0;
+}
+.success_btn {
+  color: white;
+}
 </style>
-
