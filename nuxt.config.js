@@ -29,6 +29,10 @@ export default {
   */
   plugins: [
     '~/plugins/vue-scrollto',
+    '~/plugins/vue-meta',
+    '~/plugins/mixin-common-methods',
+    '~/plugins/vue-chartjs',
+    '~plugins/persistedstate'
   ],
   /*
   ** Nuxt.js modules
@@ -56,5 +60,21 @@ export default {
   },
   generate: {
     fallback: true,
+  },
+  devModules: ['@nuxtjs/vuetify'],
+  buildModules: [
+    '@nuxtjs/vuetify'
+  ],
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    defaultAssets: {icons: 'mdiSvg'},
+    theme: {
+      light: true,  //you don't actually need this line as it's for default
+      themes: {
+          light: {
+              primary: '#b71c1c',
+          }
+      }
+    }
   }
 }

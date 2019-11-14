@@ -5,7 +5,7 @@
         <h2><a :href="link">{{ title }}</a></h2>
         <p>著者：{{writer}}</p>
         <!-- <div class="post-meta"><time>{{ created_at }}</time></div> -->
-        <div v-html="bodyHtml" ref="documentBody"></div>
+        <div v-html="bodyHtml" ref="documentBody" class="documentBody"></div>
       </div>
     </div>
     <Whiteout/>
@@ -129,5 +129,9 @@ export default {
 .container {
   max-width: 980px;
   margin: auto;
+}
+.documentBody p {
+  line-height: 1.5;
+  margin: 20px 0;
 }
 </style>
