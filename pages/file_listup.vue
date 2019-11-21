@@ -26,8 +26,13 @@
     <v-container>
       <v-expansion-panels class="table_wrapper">
         <v-expansion-panel v-for="(file,file_id) in sortedFileData" :key="`fileKey-${file_id}`">
-          <v-expansion-panel-header>{{file.fileName}}</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <div>{{file.fileName}}</div>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
+            <v-btn icon small dark @click="DeleteFile(file_id)" color="#ff0000">
+              <v-icon>fas fa-times</v-icon>
+            </v-btn>
             <DataList :file="file" :file_id="file_id" />
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -94,6 +99,9 @@ export default {
         };
         reader.readAsText(f);
       }
+    },
+    DeleteFile(key){
+      this.$store.commit("listup/file_delete", key);
     }
   }
 };

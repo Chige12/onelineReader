@@ -16,7 +16,7 @@
     "axios": "^0.19.0",
     "chart.js": "^2.9.1",
     "jstat": "^1.9.2",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.10.2",
     "simple-statistics": "^7.0.5",
     "vue-chartjs": "^3.4.2",
     "vue-meta": "^2.3.1",
@@ -24,10 +24,12 @@
     "vuex-persistedstate": "^2.7.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "@mdi/font": "^4.5.95",
     "@nuxtjs/vuetify": "^1.9.0",
     "node-sass": "^4.12.0",
-    "nodemon": "^1.18.9",
+    "nodemon": "^2.0.0",
     "processmd": "^4.4.2",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^8.0.0"
   }
 }

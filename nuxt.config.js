@@ -28,18 +28,21 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/vue-scrollto',
-    '~/plugins/vue-meta',
-    '~/plugins/mixin-common-methods',
-    '~/plugins/vue-chartjs',
-    '~plugins/persistedstate'
+    { src: '~/plugins/vue-scrollto', ssr:false },
+    { src: '~/plugins/vue-meta', ssr:false },
+    { src: '~/plugins/mixin-common-methods', ssr:true },
+    { src: '~/plugins/vue-chartjs', ssr:false },
+    { src: '~/plugins/persistedstate', ssr:false },
+    { src: '~/plugins/vuetify', ssr: false },
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     '@nuxtjs/markdownit',
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
+  ],
+  buildModules: [
     '@nuxtjs/vuetify'
   ],
   markdownit: {
@@ -63,15 +66,6 @@ export default {
     fallback: true,
   },
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    defaultAssets: {icons: 'mdiSvg'},
-    theme: {
-      light: true,  //you don't actually need this line as it's for default
-      themes: {
-          light: {
-              primary: '#b71c1c',
-          }
-      }
-    }
-  }
+    defaultAssets: { icons: 'mdiSvg' }
+  },
 }
