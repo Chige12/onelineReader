@@ -1,4 +1,5 @@
 <template>
+<v-app id="stopWatch">
   <div>
     <div class="timer" v-if="timerDisplay">
       <div>{{ timer }}</div>
@@ -11,14 +12,28 @@
         <h2>お疲れさまでした。</h2>
         <form>
           <h3>名前を入力してください</h3>
-          <v-text-field
-            type="text"
-            v-model="name"
-            placeholder="名前"
-            @change="updateSubjectName()"
-            outlined
-            dense
-          ></v-text-field>
+          <v-row align="center">
+            <v-col cols="12" sm="6">
+              <v-select
+                :items="nameList"
+                v-model="select_name"
+                label="過去の名前リストから選択"
+                @change="updateSubjectNameSelect()"
+                outlined
+                dense
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                type="text"
+                v-model="name"
+                label="名前入力"
+                @change="updateSubjectName()"
+                outlined
+                dense
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <div v-if="questionData">
             <h3>以下の質問に答えてください</h3>
             <div
@@ -47,6 +62,7 @@
       </div>
     </div>
   </div>
+</v-app>
 </template>
 
 <script>
@@ -64,12 +80,18 @@ export default {
       once: 0,
       row: "",
       name: "",
+      select_name: "",
       endform: false,
       timerRun: false,
       questionAnswer: []
     };
   },
   computed: {
+    nameList() {
+      const unique_users = this.$store.getters["listup/unique_users"];
+      console.log(unique_users)
+      return unique_users
+    },
     timerDisplay() {
       return this.$store.state.timerDisplay;
     },
@@ -136,6 +158,10 @@ export default {
         };
       }
       return judgment;
+    },
+    updateSubjectNameSelect() {
+      this.name = this.select_name
+      this.$store.commit("listup/updateSubjectName", this.name);
     },
     updateSubjectName() {
       this.$store.commit("listup/updateSubjectName", this.name);

@@ -8,7 +8,7 @@
         <div v-html="bodyHtml" ref="documentBody" class="documentBody"></div>
       </div>
     </div>
-    <Whiteout/>
+    <Whiteout ref="whiteout"/>
     <StopWatch @reset="reset"/>
   </div>
 </template>
@@ -39,6 +39,7 @@ export default {
   mounted(){
     this.$nextTick(() => {
       this.rowlist = this.$refs.documentBody.getElementsByTagName('p')
+      console.log(document.getElementById('whiteout_upper'))
       this.whiteupperH = document.getElementById('whiteout_upper').clientHeight
       for (let i = 0; i < this.rowlist.length; i++) {
         this.rowlist[i].setAttribute("id",`pg_${i}`);

@@ -55,6 +55,10 @@ export const mutations = {
     }
     state.file_data = file.sort(compare)
   },
+  file_delete(state,key){
+    let deleted_file_data = state.file_data.filter((v,i)=> i !== key)
+    state.file_data = deleted_file_data
+  },
   updateSubjectName (state,name) {
     state.subject_name = name
   }
