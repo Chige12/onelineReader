@@ -1,6 +1,8 @@
 <template>
+<v-app>
   <div class="filelist_container">
-    <div style="margin:auto;width:80%;">
+    <v-container>
+      <v-btn nuxt small to="/">Back</v-btn>
       <v-file-input
         label="File input"
         multiple
@@ -8,7 +10,7 @@
         id="files"
         @change="handleFileSelect"
       ></v-file-input>
-    </div>
+    </v-container>
     <div>
       <v-container
         class="grey lighten-5 wrapper_contents"
@@ -20,11 +22,13 @@
     <StoryCompareData />
     <!-- 分布グラフ -->
     <TimeDistribution />
-
     <Statistics />
+    <!-- 被験者別情報 -->
+    <UserCompareData />
 
-    <v-container>
-      <v-expansion-panels class="table_wrapper">
+    <v-container class="all_file_wrapper">
+      <h4>ファイル一覧</h4>
+      <v-expansion-panels >
         <v-expansion-panel v-for="(file,file_id) in sortedFileData" :key="`fileKey-${file_id}`">
           <v-expansion-panel-header>
             <div>{{file.fileName}}</div>
@@ -39,11 +43,13 @@
       </v-expansion-panels>
     </v-container>
   </div>
+</v-app>
 </template>
 <script>
 import DataList from "~/components/organisms/DataList.vue";
 import DisplayCompareData from "~/components/organisms/DisplayCompareData.vue";
 import StoryCompareData from "~/components/organisms/StoryCompareData.vue";
+import UserCompareData from "~/components/organisms/UserCompareData.vue";
 import TimeDistribution from "~/components/molecules/TimeDistribution.vue";
 import Statistics from "~/components/atoms/Statistics.vue";
 import { isObject } from "util";
@@ -52,6 +58,7 @@ export default {
   components: {
     DisplayCompareData,
     StoryCompareData,
+    UserCompareData,
     TimeDistribution,
     DataList,
     Statistics
@@ -90,6 +97,7 @@ export default {
         reader.onload = e => {
           let json_data = JSON.parse(e.target.result);
           json_data.fileName = f.name;
+          json_data.allTime = this.AllTime(json_data.data)
 
           data_list.push(json_data);
           if (data_list.length === unique_files.length) {
@@ -125,7 +133,7 @@ export default {
   left: 0;
   opacity: 0;
 }
-.table_wrapper {
+.all_file_wrapper {
   padding-top: 80px;
 }
 </style>
