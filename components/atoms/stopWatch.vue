@@ -1,68 +1,68 @@
 <template>
-<v-app id="stopWatch">
-  <div>
-    <div class="timer" v-if="timerDisplay">
-      <div>{{ timer }}</div>
-      <button @click="start()">start</button>
-      <button @click="stop()">stop</button>
-      <button @click="reset()">reset</button>
-    </div>
-    <div class="endform" v-if="endform">
-      <div class="endform_wrapper">
-        <h2>お疲れさまでした。</h2>
-        <form>
-          <h3>名前を入力してください</h3>
-          <v-row align="center">
-            <v-col cols="12" sm="6">
-              <v-select
-                :items="nameList"
-                v-model="select_name"
-                label="過去の名前リストから選択"
-                @change="updateSubjectNameSelect()"
-                outlined
-                dense
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                type="text"
-                v-model="name"
-                label="名前入力"
-                @change="updateSubjectName()"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <div v-if="questionData">
-            <h3>以下の質問に答えてください</h3>
-            <div
-              v-for="(question, question_id) in questionData"
-              :key="`question-${question_id}`"
-            >
-              <div class="question_box">
-                <p class="question_text">
-                  {{ question.Q }}
-                </p>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    type="text"
-                    v-model="questionAnswer[question_id]"
-                    placeholder="答え"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
+  <v-app id="stopWatch">
+    <div>
+      <div class="timer" v-if="timerDisplay">
+        <div>{{ timer }}</div>
+        <button @click="start()">start</button>
+        <button @click="stop()">stop</button>
+        <button @click="reset()">reset</button>
+      </div>
+      <div class="endform" v-if="endform">
+        <div class="endform_wrapper">
+          <h2>お疲れさまでした。</h2>
+          <form>
+            <h3>名前を入力してください</h3>
+            <v-row align="center">
+              <v-col cols="12" sm="6">
+                <v-select
+                  :items="nameList"
+                  v-model="select_name"
+                  label="過去の名前リストから選択"
+                  @change="updateSubjectNameSelect()"
+                  outlined
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  type="text"
+                  v-model="name"
+                  label="名前入力"
+                  @change="updateSubjectName()"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <div v-if="questionData">
+              <h3>以下の質問に答えてください</h3>
+              <div
+                v-for="(question, question_id) in questionData"
+                :key="`question-${question_id}`"
+              >
+                <div class="question_box">
+                  <p class="question_text">
+                    {{ question.Q }}
+                  </p>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      type="text"
+                      v-model="questionAnswer[question_id]"
+                      placeholder="答え"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
-        <v-btn color="#64DD17" @click="fileParse">決定</v-btn>
-        <v-btn @click="reset">キャンセル</v-btn>
+          </form>
+          <v-btn color="#64DD17" @click="fileParse">決定</v-btn>
+          <v-btn @click="reset">キャンセル</v-btn>
+        </div>
       </div>
     </div>
-  </div>
-</v-app>
+  </v-app>
 </template>
 
 <script>
@@ -89,8 +89,8 @@ export default {
   computed: {
     nameList() {
       const unique_users = this.$store.getters["listup/unique_users"];
-      console.log(unique_users)
-      return unique_users
+      console.log(unique_users);
+      return unique_users;
     },
     timerDisplay() {
       return this.$store.state.timerDisplay;
@@ -160,7 +160,7 @@ export default {
       return judgment;
     },
     updateSubjectNameSelect() {
-      this.name = this.select_name
+      this.name = this.select_name;
       this.$store.commit("listup/updateSubjectName", this.name);
     },
     updateSubjectName() {
