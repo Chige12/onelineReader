@@ -11,6 +11,7 @@
         >
           <v-card-title>{{user_list.name}}</v-card-title>
           <v-divider></v-divider>
+          <ScatterChart :data="UserStoryTimeDataSets(user_list.files)" :xticks="xticks"/>
           <v-simple-table>
             <template v-slot:default>
               <thead>
@@ -35,12 +36,47 @@
   </div>
 </template>
 <script>
+import colors from "vuetify/es5/util/colors";
+import ScatterChart from "~/components/atoms/ScatterChart.vue"
 export default {
   data() {
     return {
+      xticks : {
+        max: 8,
+        min: 1,
+        stepSize: 1
+      }
     };
   },
+  components: {
+    ScatterChart
+  },
   methods: {
+    UserStoryTimeDataSets(files){
+      let datasets = []
+      let lavels = ['Oneline','Scroll']
+      for (let i = 0; i < lavels.length; i++) {
+        let xy_dataset = []
+        for (let file_key = 0; file_key < files.length; file_key++) {
+          let xy_obj = {}
+          if(lavels[i]==='Scroll' && files[file_key].whiteout === false){
+            xy_obj.x = file_key+1
+            xy_obj.y = this.TimePerWordCount(files[file_key])
+          }
+          if(lavels[i]==='Oneline' && files[file_key].whiteout === true){
+            xy_obj.x = file_key+1
+            xy_obj.y = this.TimePerWordCount(files[file_key])
+          }
+          xy_dataset.push(xy_obj)
+        }
+        let lavel_data = {}
+        lavel_data.data = xy_dataset
+        lavel_data.label = lavels[i]
+        lavel_data.backgroundColor = lavels[i]==='Oneline' ? colors.red.lighten1 : colors.blue.lighten1
+        datasets.push(lavel_data)
+      }
+      return datasets
+    },
     UniqueUser() {
       return this.$store.getters["listup/unique_users"]
     },
@@ -91,6 +127,10 @@ export default {
         all_file_time / all_word_count
       );
       return all_file_time / all_word_count ? allAvgTime : "---";
+    },
+    TimePerWordCount(files){
+      let time = this.TimeToNumber(files.data[files.data.length - 1].time)
+      return time / files.story.word_count
     }
   }
 };
