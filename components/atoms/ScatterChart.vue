@@ -8,7 +8,7 @@
 import colors from "vuetify/es5/util/colors";
 
 export default {
-  props:["data"],
+  props:["data","xticks"],
   data() {
     return {
       chartDataValues: [],
@@ -17,14 +17,14 @@ export default {
       chartOptions: {
         maintainAspectRatio: false,
         scales: {
-            yAxes: [{
-                ticks: {
-                    // Include a dollar sign in the ticks
-                    callback: function(value, index, values) {
-                        return value+'ms';
-                    }
-                }
-            }]
+          yAxes: [{
+              ticks: {
+                  // Include a dollar sign in the ticks
+                  callback: function(value, index, values) {
+                      return value+'ms';
+                  }
+              }
+          }],
         },
         animation: {
           duration: 500,
@@ -35,6 +35,18 @@ export default {
   },
   computed: {
     chartData() {
+      if(this.xticks !== null){
+        let xAxes = []
+        let ticks = {
+          ticks: {
+            max: this.xticks.max,
+            min: this.xticks.min,
+            stepSize: this.xticks.stepSize
+          }
+        }
+        xAxes.push(ticks)
+        this.chartOptions.scales.xAxes = xAxes
+      }
       return {
         datasets: this.data,
         labels: this.chartLabels
