@@ -11,7 +11,7 @@
         >
           <v-card-title>{{user_list.name}}</v-card-title>
           <v-divider></v-divider>
-          <ScatterChart :data="UserStoryTimeDataSets(user_list.files)" :xticks="xticks"/>
+          <UserScatterChart :data="UserStoryTimeDataSets(user_list.files)" :xticks="xticks"/>
           <v-simple-table>
             <template v-slot:default>
               <thead>
@@ -63,7 +63,7 @@
 </template>
 <script>
 import colors from "vuetify/es5/util/colors";
-import ScatterChart from "~/components/atoms/ScatterChart.vue"
+import UserScatterChart from "~/components/atoms/UserScatterChart.vue"
 import JudgmentChange from "~/components/atoms/JudgmentChange.vue"
 export default {
   data() {
@@ -76,7 +76,7 @@ export default {
     };
   },
   components: {
-    ScatterChart,
+    UserScatterChart,
     JudgmentChange
   },
   methods: {

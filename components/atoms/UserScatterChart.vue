@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-      <scatter-chart :chart-data="chartData" :options="chartOptions" />
+      <scatter-chart :chart-data="chartData" :options="chartOptionsCom" />
     </v-container>
 </template>
 
@@ -8,7 +8,7 @@
 import colors from "vuetify/es5/util/colors";
 
 export default {
-  props:["data"],
+  props:["data","xticks"],
   data() {
     return {
       chartDataValues: [],
@@ -39,6 +39,21 @@ export default {
         datasets: this.data,
         labels: this.chartLabels
       };
+    },
+    chartOptionsCom() {
+      if(this.xticks !== null){
+        let xAxes = []
+        let ticks = {
+          ticks: {
+            max: this.xticks.max,
+            min: this.xticks.min,
+            stepSize: this.xticks.stepSize
+          }
+        }
+        xAxes.push(ticks)
+        this.chartOptions.scales.xAxes = xAxes
+      }
+      return this.chartOptions
     }
   }
 };
