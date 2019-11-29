@@ -30,6 +30,30 @@
               </tbody>
             </template>
           </v-simple-table>
+          <v-divider></v-divider>
+          <div v-for="(file, file_key) in user_list.files" :key="`file_${file_key}`">
+            <v-simple-table dense>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">{{file_key+1}}. 模範解答</th>
+                    <th class="text-left">解答</th>
+                    <th class="text-left">正確性</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(judgment, judgment_key) in file.judgment" :key="`judgment_${judgment_key}`">
+                    <td>{{ judgment.Model }}</td>
+                    <td>{{ judgment.Answer }}</td>
+                    <td>
+                      <JudgmentChange :judgment="judgment" :judgment_key="judgment_key" :file="file"/>
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+            <v-divider></v-divider>
+          </div>
         </v-card>
       </div>
     </v-container>
@@ -38,6 +62,7 @@
 <script>
 import colors from "vuetify/es5/util/colors";
 import ScatterChart from "~/components/atoms/ScatterChart.vue"
+import JudgmentChange from "~/components/atoms/JudgmentChange.vue"
 export default {
   data() {
     return {
@@ -45,13 +70,27 @@ export default {
         max: 8,
         min: 1,
         stepSize: 1
-      }
+      },
     };
   },
   components: {
-    ScatterChart
+    ScatterChart,
+    JudgmentChange
   },
   methods: {
+    updateJudgment(file_name,judgment_key,judge){
+      this.$store.commit("listup/judgmentUpdate", {file_name:file_name,judgment_key:judgment_key,judge:judge});
+    },
+    AddJudgeFile(list){
+      for (let file_key = 0; file_key < list.length; file_key++) {
+        for (let jud_key = 0; jud_key < list[file_key].judgment.length; jud_key++) {
+          if(list[file_key].judgment[jud_key].judge === undefined){
+            list[file_key].judgment[jud_key].judge = "?"
+          }
+        }
+      }
+      return list
+    },
     UserStoryTimeDataSets(files){
       let datasets = []
       let lavels = ['Oneline','Scroll']
@@ -88,8 +127,9 @@ export default {
         let one_user_list = this.$store.getters[
           "listup/sorted_filename"
         ].filter(f => f.name === user_list[i]);
+        let one_user_judge_list = this.AddJudgeFile(one_user_list)
         user_data_list_once.name = user_list[i]
-        user_data_list_once.files = one_user_list
+        user_data_list_once.files = one_user_judge_list
         user_data_list.push(user_data_list_once);
       }
       console.log(user_data_list)
@@ -143,5 +183,12 @@ export default {
 .com_card {
   width: calc(50% - 8px);
   margin: 4px;
+}
+thead {
+  background: #eee;
+}
+.judge_select {
+  padding: 0 4px;
+  text-align: center;
 }
 </style>
