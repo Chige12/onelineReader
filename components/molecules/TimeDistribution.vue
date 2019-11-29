@@ -29,12 +29,13 @@ export default {
             if(lavels[i]==='Scroll' && user_data[io].whiteout === false){
               xy_obj.x = iu
               xy_obj.y = this.TimePerWordCount(user_data[io])
+              xy_dataset.push(xy_obj)
             }
             if(lavels[i]==='Oneline' && user_data[io].whiteout === true){
               xy_obj.x = iu
               xy_obj.y = this.TimePerWordCount(user_data[io])
+              xy_dataset.push(xy_obj)
             }
-            xy_dataset.push(xy_obj)
           }
         }
         let lavel_data = {}
