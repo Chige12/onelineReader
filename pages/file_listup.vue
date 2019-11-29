@@ -97,8 +97,6 @@ export default {
         reader.onload = e => {
           let json_data = JSON.parse(e.target.result);
           json_data.fileName = f.name;
-          json_data.allTime = this.AllTime(json_data.data)
-
           data_list.push(json_data);
           if (data_list.length === unique_files.length) {
             let new_data_list = state_file.concat(data_list);

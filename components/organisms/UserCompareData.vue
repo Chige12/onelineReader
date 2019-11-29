@@ -19,6 +19,7 @@
                   <th class="text-left">読み順</th>
                   <th class="text-left">UI読み順</th>
                   <th class="text-left">平均読み時間</th>
+                  <th class="text-left">正確さ</th>
                 </tr>
               </thead>
               <tbody>
@@ -26,6 +27,7 @@
                   <td>{{ item.story }}</td>
                   <td>{{ item.ui }}</td>
                   <td>{{ item.avgTime }}</td>
+                  <td>{{ item.accuracy }}%</td>
                 </tr>
               </tbody>
             </template>
@@ -46,7 +48,7 @@
                     <td>{{ judgment.Model }}</td>
                     <td>{{ judgment.Answer }}</td>
                     <td>
-                      <JudgmentChange :judgment="judgment" :judgment_key="judgment_key" :file="file"/>
+                      <JudgmentChange :judge="judgment.judge" :judgment_key="judgment_key" :file="file"/>
                     </td>
                   </tr>
                 </tbody>
@@ -137,11 +139,13 @@ export default {
     },
     userTableList(files){
       let usl = []
+      console.log("userTable",files)
       for (let i = 0; i < files.length; i++) {
         let usl_obj = {}
         usl_obj.story = `${files[i].story.id.split('_')[1]}. ${files[i].story.title}`
         usl_obj.ui = files[i].whiteout ? 'Oneline':'Scroll'
         usl_obj.avgTime = this.AvgTime(files[i])
+        usl_obj.accuracy = this.AvgAccuracy(files[i])
         usl.push(usl_obj)
       }
       return usl
@@ -155,6 +159,34 @@ export default {
       let word_count = file.story.word_count;
       let AvgTime = this.NumberToTimeWithText(time / word_count);
       return AvgTime;
+    },
+    AvgAccuracy(file){
+      let all_accurasy = []
+      for (let i = 0; i < file.judgment.length; i++) {
+        switch (file.judgment[i].judge) {
+          case "◎":
+            all_accurasy.push(3)
+            break;
+          case "○":
+            all_accurasy.push(2)
+            break;
+          case "△":
+            all_accurasy.push(1)
+            break;
+          case "×":
+            all_accurasy.push(0)
+            break;
+          default:
+            break;
+        }
+      }
+      let sum_accuracy = 0
+      let max_accuracy = 0
+      for (let i = 0; i < all_accurasy.length; i++) {
+        sum_accuracy += all_accurasy[i]
+        max_accuracy += 3
+      }
+      return this.OrgFloor((sum_accuracy/max_accuracy)*100,2)
     },
     AllAvgTime(files) {
       let all_file_time = 0;
@@ -186,9 +218,5 @@ export default {
 }
 thead {
   background: #eee;
-}
-.judge_select {
-  padding: 0 4px;
-  text-align: center;
 }
 </style>
