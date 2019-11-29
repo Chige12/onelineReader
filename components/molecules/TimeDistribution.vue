@@ -43,6 +43,7 @@ export default {
         lavel_data.backgroundColor = lavels[i]==='Oneline' ? colors.red.lighten1 : colors.blue.lighten1
         datasets.push(lavel_data)
       }
+      console.log("datasets",datasets)
       return datasets
     }
   },

@@ -66,8 +66,6 @@ export const mutations = {
     for (let i = 0; i < state.file_data.length; i++) {
       if(state.file_data[i].fileName === data_ary.file_name){
         if(state.file_data[i].judgment[data_ary.judgment_key].judge !== data_ary.judge){
-          console.log(data_ary.judge)
-          console.log(state.file_data[i].judgment[data_ary.judgment_key])
           state.file_data[i].judgment[data_ary.judgment_key].judge = data_ary.judge
         }
       }
