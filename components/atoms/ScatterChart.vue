@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-      <scatter-chart :chart-data="chartData" :options="chartOptions" />
+      <scatter-chart :chart-data="chartData" :options="chartOptionsCom" />
     </v-container>
 </template>
 
@@ -35,6 +35,12 @@ export default {
   },
   computed: {
     chartData() {
+      return {
+        datasets: this.data,
+        labels: this.chartLabels
+      };
+    },
+    chartOptionsCom() {
       if(this.xticks !== null){
         let xAxes = []
         let ticks = {
@@ -47,10 +53,7 @@ export default {
         xAxes.push(ticks)
         this.chartOptions.scales.xAxes = xAxes
       }
-      return {
-        datasets: this.data,
-        labels: this.chartLabels
-      };
+      return this.chartOptions
     }
   }
 };
