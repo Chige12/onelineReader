@@ -134,12 +134,10 @@ export default {
         user_data_list_once.files = one_user_judge_list
         user_data_list.push(user_data_list_once);
       }
-      console.log(user_data_list)
       return user_data_list;
     },
     userTableList(files){
       let usl = []
-      console.log("userTable",files)
       for (let i = 0; i < files.length; i++) {
         let usl_obj = {}
         usl_obj.story = `${files[i].story.id.split('_')[1]}. ${files[i].story.title}`

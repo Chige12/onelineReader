@@ -61,7 +61,6 @@ export default {
           user_tTestTwoSample.push(0);
         }
       }
-      console.log(sorted_filename);
       return user_tTestTwoSample;
     }
   },

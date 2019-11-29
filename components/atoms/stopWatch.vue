@@ -89,7 +89,6 @@ export default {
   computed: {
     nameList() {
       const unique_users = this.$store.getters["listup/unique_users"];
-      console.log(unique_users);
       return unique_users;
     },
     timerDisplay() {
@@ -206,7 +205,6 @@ export default {
         downLoadLink.download,
         downLoadLink.href
       ].join(":");
-      console.log(downLoadLink);
       downLoadLink.click();
     },
     doWriteFile() {
