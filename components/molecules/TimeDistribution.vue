@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h4>被験者別1文字当たりの時間分布</h4>
-    <ScatterChart :data="UserTimeDataSets" :xticks="null"/>
+    <ScatterChart :data="UserTimeDataSets"/>
     <div class="user_name_list">
       <div v-for="(user,user_key) in UniqueUsers()" :key="`UTD_key_${user_key}`" class="user_name_box">{{user}}</div>
     </div>
