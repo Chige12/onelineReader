@@ -45,7 +45,15 @@
                     {{ question.Q }}
                   </p>
                   <v-col cols="12" sm="6" md="4">
+                    <v-radio-group
+                      v-if="question.S !== null"
+                      v-model="questionAnswer[question_id]"
+                      row
+                    >
+                      <v-radio v-for="(sel_item, sel_key) in question.S.split(',')" :key="`sel_${sel_key}`" :label="sel_item" :value="sel_item"></v-radio>
+                    </v-radio-group>
                     <v-text-field
+                      v-else
                       type="text"
                       v-model="questionAnswer[question_id]"
                       placeholder="答え"

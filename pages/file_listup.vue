@@ -1,49 +1,50 @@
 <template>
-<v-app>
-  <div class="filelist_container">
-    <v-container>
-      <v-btn nuxt small to="/">Back</v-btn>
-      <v-file-input
-        label="File input"
-        multiple
-        key="jsonfile"
-        id="files"
-        @change="handleFileSelect"
-      ></v-file-input>
-    </v-container>
-    <div>
-      <v-container
-        class="grey lighten-5 wrapper_contents"
-      >File count : {{this.$store.state.listup.file_data.length}} files</v-container>
-    </div>
-    <!-- 表示方法別情報 -->
-    <DisplayCompareData />
-    <!-- ストーリー別情報 -->
-    <StoryCompareData />
-    <!-- 分布グラフ -->
-    <TimeDistribution />
-    <Statistics />
-    <!-- 被験者別情報 -->
-    <UserCompareData />
+  <v-app>
+    <div class="filelist_container">
+      <v-container>
+        <v-btn nuxt small to="/">Back</v-btn>
+        <v-file-input
+          label="File input"
+          multiple
+          key="jsonfile"
+          id="files"
+          @change="handleFileSelect"
+        ></v-file-input>
+      </v-container>
+      <div>
+        <v-container
+          class="grey lighten-5 wrapper_contents"
+        >File count : {{this.$store.state.listup.file_data.length}} files</v-container>
+      </div>
+      <judgmentStyle />
+      <!-- 表示方法別情報 -->
+      <DisplayCompareData />
+      <!-- ストーリー別情報 -->
+      <StoryCompareData />
+      <!-- 分布グラフ -->
+      <TimeDistribution />
+      <Statistics />
+      <!-- 被験者別情報 -->
+      <UserCompareData />
 
-    <v-container class="all_file_wrapper">
-      <h4>ファイル一覧</h4>
-      <v-expansion-panels >
-        <v-expansion-panel v-for="(file,file_id) in sortedFileData" :key="`fileKey-${file_id}`">
-          <v-expansion-panel-header>
-            <div>{{file.fileName}}</div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-btn icon small dark @click="DeleteFile(file_id)" color="#ff0000">
-              <v-icon>fas fa-times</v-icon>
-            </v-btn>
-            <DataList :file="file" :file_id="file_id" />
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </v-container>
-  </div>
-</v-app>
+      <v-container class="all_file_wrapper">
+        <h4>ファイル一覧</h4>
+        <v-expansion-panels >
+          <v-expansion-panel v-for="(file,file_id) in sortedFileData" :key="`fileKey-${file_id}`">
+            <v-expansion-panel-header>
+              <div>{{file.fileName}}</div>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-btn icon small dark @click="DeleteFile(file_id)" color="#ff0000">
+                <v-icon>fas fa-times</v-icon>
+              </v-btn>
+              <DataList :file="file" :file_id="file_id" />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-container>
+    </div>
+  </v-app>
 </template>
 <script>
 import DataList from "~/components/organisms/DataList.vue";
@@ -52,6 +53,7 @@ import StoryCompareData from "~/components/organisms/StoryCompareData.vue";
 import UserCompareData from "~/components/organisms/UserCompareData.vue";
 import TimeDistribution from "~/components/molecules/TimeDistribution.vue";
 import Statistics from "~/components/atoms/Statistics.vue";
+import judgmentStyle from "~/components/atoms/judgmentStyle.vue";
 import { isObject } from "util";
 
 export default {
@@ -61,6 +63,7 @@ export default {
     UserCompareData,
     TimeDistribution,
     DataList,
+    judgmentStyle,
     Statistics
   },
   data() {

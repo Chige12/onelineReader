@@ -2,86 +2,88 @@
   <div>
     <p>{{FileDay}}</p>
     <table class="table">
-      <tr class="table_header">
-        <th>Number</th>
-        <th>Press Key</th>
-        <th>Time</th>
-        <th>Row</th>
-        <th>Row Height</th>
-        <th>Stay Time</th>
-        <th>Word</th>
-      </tr>
-      <tr
-        class="table_row"
-        v-for="(action,action_id) in FileDataTable"
-        :key="`actionKey-${action_id}`"
-      >
-        <td>{{action_id+1}}</td>
-        <td>{{action.key}}</td>
-        <td>'{{action.time}}</td>
-        <td>{{(action.row==null ? "": action.row+1)}}</td>
-        <td>{{action.height}}</td>
-        <td>'{{action.stayTime}}</td>
-        <td>{{action.word}}</td>
-      </tr>
-      <tr class="table_row_end">
-        <td>-</td>
-        <td>-</td>
-        <td>'{{AllTime()}}</td>
-        <td>-</td>
-        <td>-</td>
-        <td>=SUM()</td>
-        <td>-</td>
-      </tr>
-      <tr class="table_row_detail">
-        <td>whiteout</td>
-        <td>{{file.whiteout}}</td>
-        <td>crack px</td>
-        <td>{{file.crack_px}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr class="table_row_detail">
-        <td>word count</td>
-        <td>{{file.story.word_count}}</td>
-        <td>1文字あたりの時間</td>
-        <td>'{{TimePerChar}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr class="table_row_detail">
-        <td>paragraphs</td>
-        <td>{{file.story.paragraphs}}</td>
-        <td>1段落あたりの時間</td>
-        <td>'{{TimePerPara}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr class="table_row_detail">
-        <td>judgment</td>
-        <td>Model</td>
-        <td>Answer</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr
-        class="table_row_detail"
-        v-for="(jud,jud_id) in file.judgment"
-        :key="`judgmentKey-${jud_id}`"
-      >
-        <td></td>
-        <td>{{jud.Model}}</td>
-        <td>{{jud.Answer}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+      <tbody>
+        <tr class="table_header">
+          <th>Number</th>
+          <th>Press Key</th>
+          <th>Time</th>
+          <th>Row</th>
+          <th>Row Height</th>
+          <th>Stay Time</th>
+          <th>Word</th>
+        </tr>
+        <tr
+          class="table_row"
+          v-for="(action,action_id) in FileDataTable"
+          :key="`actionKey-${action_id}`"
+        >
+          <td>{{action_id+1}}</td>
+          <td>{{action.key}}</td>
+          <td>'{{action.time}}</td>
+          <td>{{(action.row==null ? "": action.row+1)}}</td>
+          <td>{{action.height}}</td>
+          <td>'{{action.stayTime}}</td>
+          <td>{{action.word}}</td>
+        </tr>
+        <tr class="table_row_end">
+          <td>-</td>
+          <td>-</td>
+          <td>'{{AllTime()}}</td>
+          <td>-</td>
+          <td>-</td>
+          <td>=SUM()</td>
+          <td>-</td>
+        </tr>
+        <tr class="table_row_detail">
+          <td>whiteout</td>
+          <td>{{file.whiteout}}</td>
+          <td>crack px</td>
+          <td>{{file.crack_px}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="table_row_detail">
+          <td>word count</td>
+          <td>{{file.story.word_count}}</td>
+          <td>1文字あたりの時間</td>
+          <td>'{{TimePerChar}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="table_row_detail">
+          <td>paragraphs</td>
+          <td>{{file.story.paragraphs}}</td>
+          <td>1段落あたりの時間</td>
+          <td>'{{TimePerPara}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="table_row_detail">
+          <td>judgment</td>
+          <td>Model</td>
+          <td>Answer</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr
+          class="table_row_detail"
+          v-for="(jud,jud_id) in file.judgment"
+          :key="`judgmentKey-${jud_id}`"
+        >
+          <td></td>
+          <td>{{jud.Model}}</td>
+          <td>{{jud.Answer}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
