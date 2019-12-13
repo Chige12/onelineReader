@@ -160,31 +160,46 @@ export default {
     },
     AvgAccuracy(file){
       let all_accurasy = []
+      let judge_style = this.$store.state.listup.judge_style;
       for (let i = 0; i < file.judgment.length; i++) {
         switch (file.judgment[i].judge) {
           case "◎":
-            all_accurasy.push(3)
+            all_accurasy.push(3);
             break;
           case "○":
-            all_accurasy.push(2)
+            all_accurasy.push(judge_style==='four' ? 2 : 3);
             break;
           case "△":
-            all_accurasy.push(1)
+            all_accurasy.push(judge_style==='four' ? 1 : 0);
             break;
           case "×":
-            all_accurasy.push(0)
+            all_accurasy.push(0);
+            break;
+          case "?":
+            all_accurasy.push('question');
             break;
           default:
+            all_accurasy.push(null);
             break;
         }
       }
       let sum_accuracy = 0
       let max_accuracy = 0
-      for (let i = 0; i < all_accurasy.length; i++) {
-        sum_accuracy += all_accurasy[i]
-        max_accuracy += 3
+      if(all_accurasy.some(val => {return val === 'question'})){
+        return "//"
+      }else{
+        for (let i = 0; i < all_accurasy.length; i++) {
+          if(all_accurasy[i] !== null){
+            sum_accuracy += all_accurasy[i]
+            max_accuracy += 3
+          }
+        }
+        if(max_accuracy !== 0) {
+          return this.OrgFloor((sum_accuracy/max_accuracy)*100,2)
+        }else{
+          return "//"
+        }
       }
-      return this.OrgFloor((sum_accuracy/max_accuracy)*100,2)
     },
     AllAvgTime(files) {
       let all_file_time = 0;

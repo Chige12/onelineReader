@@ -72,10 +72,15 @@ export default {
       let questionArray = [];
       let questionNumber = 1;
       while (eval(`this.question_${questionNumber}`)) {
-        questionArray.push({
-          Q: `${eval(`this.question_${questionNumber}`)}`,
-          A: `${eval(`this.answer_${questionNumber}`)}`
-        });
+        let question = {}
+        if(eval(`this.selector_${questionNumber}`)){
+          question.S = `${eval(`this.selector_${questionNumber}`)}`
+        }else{
+          question.S = null
+        }
+        question.Q = `${eval(`this.question_${questionNumber}`)}`,
+        question.A = `${eval(`this.answer_${questionNumber}`)}`
+        questionArray.push(question);
         questionNumber++;
       }
       this.$store.commit("questionData", questionArray);

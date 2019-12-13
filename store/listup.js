@@ -1,7 +1,8 @@
 
 export const state = () => ({
   file_data : [],
-  subject_name : ''
+  subject_name : '',
+  judge_style : 'four' // or two
 })
 
 export const getters = { //computed
@@ -70,6 +71,9 @@ export const mutations = {
         }
       }
     }
+  },
+  changeJudgeStyle(state){
+    state.judge_style = state.judge_style === 'four' ? 'two' : 'four'
   }
 }
 

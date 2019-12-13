@@ -4,6 +4,7 @@ created_at: 2019-06-20
 link: https://kakuyomu.jp/works/1177354054880314308/episodes/1177354054880314646
 writer: ＠comsick
 question_1: 賭けに勝ったのは、大金持ちと伯爵どちらですか？
+selector_1: 大金持ち,伯爵
 answer_1: 大金持ち
 question_2: 伯爵との勝負で大金持ちが賭けたのは何ですか？
 answer_2: 全財産

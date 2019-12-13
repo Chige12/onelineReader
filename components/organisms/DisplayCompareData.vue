@@ -11,6 +11,12 @@
               <v-list-item-content>平均時間(1文字当たり):</v-list-item-content>
               <v-list-item-content class="align-end">{{ OnelineAvgTime }}</v-list-item-content>
             </v-list-item>
+            <v-list dense>
+            <v-list-item>
+              <v-list-item-content>解答の正確さ:</v-list-item-content>
+              <v-list-item-content class="align-end">{{ onelineAvgAccuracy }}%</v-list-item-content>
+            </v-list-item>
+          </v-list>
           </v-list>
         </v-card>
         <v-card class="com_card" outlined>
@@ -20,6 +26,12 @@
             <v-list-item>
               <v-list-item-content>平均時間(1文字当たり):</v-list-item-content>
               <v-list-item-content class="align-end">{{ scrollAvgTime }}</v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list dense>
+            <v-list-item>
+              <v-list-item-content>解答の正確さ:</v-list-item-content>
+              <v-list-item-content class="align-end">{{ scrollAvgAccuracy }}%</v-list-item-content>
             </v-list-item>
           </v-list>
         </v-card>
@@ -43,6 +55,14 @@ export default {
     OnelineAvgTime() {
       let oneline_files = this.$store.getters["listup/oneline_files"]
       return this.AllAvgTime(oneline_files);
+    },
+    scrollAvgAccuracy() {
+      let scroll_files = this.$store.getters["listup/scroll_files"]
+      return this.AllAccuracy(scroll_files);
+    },
+    onelineAvgAccuracy() {
+      let oneline_files = this.$store.getters["listup/oneline_files"]
+      return this.AllAccuracy(oneline_files);
     }
   },
   methods: {
@@ -61,7 +81,54 @@ export default {
         all_file_time / all_word_count
       );
       return all_file_time / all_word_count ? allAvgTime : "---";
-    }
+    },
+    AllAccuracy(files){
+      let all_accurasy = []
+      let judge_style = this.$store.state.listup.judge_style;
+      for (let i = 0; i < files.length; i++) {
+        let file_accurasy = []
+        let delete_file_list = false
+        for (let j = 0; j < files[i].judgment.length; j++) {
+          switch (files[i].judgment[j].judge) {
+            case "◎":
+              file_accurasy.push(3);
+              break;
+            case "○":
+              file_accurasy.push(judge_style==='four' ? 2 : 3);
+              break;
+            case "△":
+              file_accurasy.push(judge_style==='four' ? 1 : 0);
+              break;
+            case "×":
+              file_accurasy.push(0);
+              break;
+            case "?":
+              file_accurasy.push('question');
+              delete_file_list = true
+              break;
+            default:
+              file_accurasy.push(null);
+              break;
+          }
+        }
+        if(delete_file_list === false){
+          all_accurasy.push(...file_accurasy);
+        }
+      }
+      let sum_accuracy = 0
+      let max_accuracy = 0
+      for (let i = 0; i < all_accurasy.length; i++) {
+        if(all_accurasy[i] !== null){
+          sum_accuracy += all_accurasy[i]
+          max_accuracy += 3
+        }
+      }
+      if(max_accuracy !== 0) {
+        return this.OrgFloor((sum_accuracy/max_accuracy)*100,2)
+      }else{
+        return "//"
+      }
+    },
   }
 };
 </script>
