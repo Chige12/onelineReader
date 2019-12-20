@@ -5,12 +5,12 @@
       :style="{
         marginTop:`${-(crackPx/2)}px`,
         marginBottom:`${crackPx}px`,
-        background: `linear-gradient( to bottom, rgba(255,255,255,1) ${100 - whiteBlur}%, rgba(255,255,255,0) )`
+        background: `linear-gradient( to bottom, rgba(67,160,71,1) ${100 - whiteBlur}%, rgba(67,160,71,0) )`
       }">
     </div>
     <div class="whiteout_under" id="whiteout_under"
       :style="{
-        background: `linear-gradient( to top, rgba(255,255,255,1) ${100 - whiteBlur}%, rgba(255,255,255,0) )`
+        background: `linear-gradient( to top, rgba(67,160,71,1) ${100 - whiteBlur}%, rgba(67,160,71,0) )`
       }"
     ></div>
   </div>
@@ -39,10 +39,10 @@ export default {
 .whiteout {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: 80px;
   height: 100vh;
-  z-index: 2;
+  z-index: 0;
 }
 .whiteout_upper{
   width: 100%;

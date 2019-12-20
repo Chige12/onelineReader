@@ -1,50 +1,74 @@
 <template>
-  <div class="container">
-    <header>
-      <h1>Oneline Reader</h1>
-      <div class="header_menu">
-        <v-btn class="update_btn" @click="update()">更新</v-btn>
-        <p>一行ずつ読む読書アプリです。</p>
-        <p><a href="https://github.com/Chige12/onelinereader">Github repository</a></p>
+  <v-app>
+    <div class="container">
+      <div class="whiteout_preview">
+        <WhiteoutPrev/>
       </div>
-    </header>
-    <main>
-      <ul>
-        <li v-for="(story,story_id) in storylist" :key="`storis-${story_id}`">
-          <nuxt-link :to="`../stories/story_${story_id+1}`">{{story.sourceBase.slice(0,-3)}} | {{story.title}}</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="./file_listup">ファイル リストアップツール</nuxt-link>
-        </li>
-      </ul>
-    </main>
-  </div>
+      <header>
+        <h1>Oneline Reader</h1>
+        <div class="header_menu">
+          <v-btn class="update_btn" @click="update()">更新</v-btn>
+          <p>一行ずつ読む読書アプリです。</p>
+          <p>
+            <a href="https://github.com/Chige12/onelinereader"
+              >Github repository</a
+            >
+          </p>
+        </div>
+      </header>
+      <SettingMenu />
+      <main>
+        <ul>
+          <li
+            v-for="(story, story_id) in storylist"
+            :key="`storis-${story_id}`"
+            :style="`font-size: ${fontSize}px;`"
+          >
+            <nuxt-link :to="`../stories/story_${story_id + 1}`"
+              >{{ story.sourceBase.slice(0, -3) }} |
+              {{ story.title }}</nuxt-link
+            >
+          </li>
+          <li>
+            <nuxt-link to="./file_listup"
+              >ファイル リストアップツール</nuxt-link
+            >
+          </li>
+        </ul>
+      </main>
+    </div>
+  </v-app>
 </template>
 
 <script>
-import Whiteout from '~/components/atoms/whiteout.vue'
-import summaryJson from '~/contents/summary.json'
+import WhiteoutPrev from "~/components/atoms/WhiteoutPrev.vue";
+import SettingMenu from "~/components/molecules/SettingMenu.vue";
+import summaryJson from "~/contents/summary.json";
 export default {
-  components:{
-    Whiteout
+  components: {
+    WhiteoutPrev,
+    SettingMenu
   },
-  data(){
+  data() {
     return {
       storis: "hoge"
-    }
+    };
   },
-  mounted(){
-    
+  mounted() {
+    this.$store.commit("CloseMenuDisplay");
   },
   computed: {
-    storylist(){
-      return this.$store.state.storylist
+    storylist() {
+      return this.$store.state.storylist;
+    },
+    fontSize() {
+      return this.$store.state.fontSize;
     }
   },
   methods: {
-    update(){
+    update() {
       this.$store.commit("listup/updateSubjectName", "");
-      this.updateStorislist()
+      this.updateStorislist();
     },
     updateStorislist() {
       var summaryJsonMap = Object.entries(
@@ -58,15 +82,22 @@ export default {
       this.$store.commit("storislist", storislist);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 h1 {
   margin: 16px 0;
 }
-p, li {
+p,
+li {
   margin: 4px 0;
+}
+.container {
+  min-height: 100vh;
+}
+.whiteout_preview {
+  z-index: -2;
 }
 
 .header_menu {

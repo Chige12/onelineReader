@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="reader">
+    <div class="reader" id="top">
       <div class="container" id="container">
-        <h2>
+        <h2 ref="storyTitle">
           <a :href="link">{{ title }}</a>
         </h2>
-        <p>著者：{{ writer }}</p>
-        <div v-html="bodyHtml" ref="documentBody" class="documentBody"></div>
+        <p ref="storyWriter">著者：{{ writer }}</p>
+        <div v-html="bodyHtml" ref="documentBody" class="documentBody" :style="`font-size: ${fontSize}px;`"></div>
       </div>
     </div>
     <Whiteout />
@@ -28,8 +28,13 @@ export default {
     return {
       nowrow: null,
       rowlist: [],
-      whiteupperH: 16
+      whiteupperH: 16,
     };
+  },
+  computed: {
+    fontSize(){
+      return this.$store.state.fontSize;
+    }
   },
   validate({ params }) {
     return summaryJson.sourceFileArray.includes(
@@ -45,6 +50,9 @@ export default {
     this.$nextTick(() => {
       this.firstLoad()
       setTimeout(() => this.firstLoad(), 500)
+      const titleHeight = this.$refs.storyTitle.clientHeight;
+      const writerHeight = this.$refs.storyWriter.clientHeight;
+      this.$store.commit("ChangeCrack", titleHeight+(writerHeight*2));
     });
   },
   created() {
@@ -114,11 +122,17 @@ export default {
     arrowScrollUp(e) {
       let height;
       if (this.nowrow === 0) {
+        e.preventDefault();
+        const titleHeight = this.$refs.storyTitle.clientHeight;
+        const writerHeight = this.$refs.storyWriter.clientHeight;
+        this.$store.commit("ChangeCrack", titleHeight+(writerHeight*2));
+        this.$scrollTo(`#top`, 100, {offset:0});
         this.nowrow = null;
       }
       if (this.nowrow > 0) {
         e.preventDefault();
         height = this.rowlist[this.nowrow - 1].clientHeight / 2;
+        this.$store.commit("ChangeCrack", height*2);
         this.$scrollTo(`#pg_${this.nowrow - 1}`, 100, {
           offset: -this.whiteupperH + height
         });
@@ -134,10 +148,12 @@ export default {
       let height;
       if (this.nowrow === null) {
         height = this.rowlist[0].clientHeight / 2;
+        this.$store.commit("ChangeCrack", height*2);
         this.$scrollTo(`#pg_0`, 100, { offset: -this.whiteupperH + height });
         this.nowrow = 0;
       } else if (0 <= this.nowrow && this.nowrow < this.rowlist.length - 1) {
         height = this.rowlist[this.nowrow + 1].clientHeight / 2;
+        this.$store.commit("ChangeCrack", height*2);
         this.$scrollTo(`#pg_${this.nowrow + 1}`, 100, {
           offset: -this.whiteupperH + height
         });

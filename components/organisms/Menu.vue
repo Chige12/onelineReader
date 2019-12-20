@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="menu" v-if="menuDisplay">
+      <SettingMenu />
       <p>隙間：{{ crackPx }}px</p>
       <ul>
         <li v-for="(story, story_id) in storislist" :key="`storis-${story_id}`">
@@ -13,8 +14,12 @@
   </div>
 </template>
 <script>
+import SettingMenu from "~/components/molecules/SettingMenu.vue";
 import summaryJson from "~/contents/summary.json";
 export default {
+  components: {
+    SettingMenu
+  },
   data() {
     return {
       storislist: []

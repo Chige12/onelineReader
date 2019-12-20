@@ -3,6 +3,8 @@ export const state = () => ({
   menuDisplay: false,
   timerDisplay: false,
   crack_px: 16,
+  fontSize: 16,
+  white_blur: 10,
   lessdata:null,
   questionData:null,
   storyData:null,
@@ -13,14 +15,26 @@ export const mutations = {
   toggleWhiteOut (state) {
     state.whiteout = !state.whiteout
   },
+  ChangeWhiteOut (state, whiteout) {
+    state.whiteout = whiteout
+  },
   toggleMenuDisplay (state) {
     state.menuDisplay = !state.menuDisplay
+  },
+  CloseMenuDisplay (state) {
+    state.menuDisplay = false
   },
   toggleTimerDisplay(state){
     state.timerDisplay = !state.timerDisplay
   },
   ChangeCrack(state,px) {
     state.crack_px = px
+  },
+  SetFontSize(state, size) {
+    state.fontSize = size
+  },
+  ChangeBlur(state, blur) {
+    state.white_blur = blur
   },
   updateData(state,lessdata){
     state.lessdata = lessdata
