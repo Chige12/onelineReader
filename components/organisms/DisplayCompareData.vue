@@ -11,12 +11,14 @@
               <v-list-item-content>平均時間(1文字当たり):</v-list-item-content>
               <v-list-item-content class="align-end">{{ OnelineAvgTime }}</v-list-item-content>
             </v-list-item>
-            <v-list dense>
             <v-list-item>
               <v-list-item-content>解答の正確さ:</v-list-item-content>
               <v-list-item-content class="align-end">{{ onelineAvgAccuracy }}%</v-list-item-content>
             </v-list-item>
-          </v-list>
+            <v-list-item>
+              <v-list-item-content>平均注視回数:</v-list-item-content>
+              <v-list-item-content class="align-end">{{ onelineAvgFixation }}</v-list-item-content>
+            </v-list-item>
           </v-list>
         </v-card>
         <v-card class="com_card" outlined>
@@ -27,11 +29,13 @@
               <v-list-item-content>平均時間(1文字当たり):</v-list-item-content>
               <v-list-item-content class="align-end">{{ scrollAvgTime }}</v-list-item-content>
             </v-list-item>
-          </v-list>
-          <v-list dense>
             <v-list-item>
               <v-list-item-content>解答の正確さ:</v-list-item-content>
               <v-list-item-content class="align-end">{{ scrollAvgAccuracy }}%</v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>平均注視回数:</v-list-item-content>
+              <v-list-item-content class="align-end">{{ scrollAvgFixation }}</v-list-item-content>
             </v-list-item>
           </v-list>
         </v-card>
@@ -63,6 +67,14 @@ export default {
     onelineAvgAccuracy() {
       let oneline_files = this.$store.getters["listup/oneline_files"]
       return this.AllAccuracy(oneline_files);
+    },
+    onelineAvgFixation() {
+      let oneline_files = this.$store.getters["listup/oneline_files"]
+      return this.AvgFixation(oneline_files);
+    },
+    scrollAvgFixation() {
+      let scroll_files = this.$store.getters["listup/scroll_files"]
+      return this.AvgFixation(scroll_files);
     }
   },
   methods: {
@@ -129,6 +141,17 @@ export default {
         return "//"
       }
     },
+    AvgFixation(files){
+      let avg_fix = 0
+      let avg_count = 0
+      for (let i = 0; i < files.length; i++) {
+        if(files[i].maxFixation){
+          avg_fix += files[i].maxFixation
+          avg_count++
+        }
+      }
+      return this.OrgFloor(avg_fix / avg_count,2) || '//'
+    }
   }
 };
 </script>

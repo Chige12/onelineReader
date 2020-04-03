@@ -27,33 +27,18 @@
       <!-- 被験者別情報 -->
       <UserCompareData />
 
-      <v-container class="all_file_wrapper">
-        <h4>ファイル一覧</h4>
-        <v-expansion-panels >
-          <v-expansion-panel v-for="(file,file_id) in sortedFileData" :key="`fileKey-${file_id}`">
-            <v-expansion-panel-header>
-              <div>{{file.fileName}}</div>
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <v-btn icon small dark @click="DeleteFile(file_id)" color="#ff0000">
-                <v-icon>fas fa-times</v-icon>
-              </v-btn>
-              <DataList :file="file" :file_id="file_id" />
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-container>
+      <ExpansionFileList :file="sortedFileData" :type="'time'" @DeleteFile="DeleteFile"/>
     </div>
   </v-app>
 </template>
 <script>
-import DataList from "~/components/organisms/DataList.vue";
 import DisplayCompareData from "~/components/organisms/DisplayCompareData.vue";
 import StoryCompareData from "~/components/organisms/StoryCompareData.vue";
 import UserCompareData from "~/components/organisms/UserCompareData.vue";
 import TimeDistribution from "~/components/molecules/TimeDistribution.vue";
 import Statistics from "~/components/atoms/Statistics.vue";
 import judgmentStyle from "~/components/atoms/judgmentStyle.vue";
+import ExpansionFileList from "~/components/organisms/ExpansionFileList.vue";
 import { isObject } from "util";
 
 export default {
@@ -62,14 +47,9 @@ export default {
     StoryCompareData,
     UserCompareData,
     TimeDistribution,
-    DataList,
     judgmentStyle,
-    Statistics
-  },
-  data() {
-    return {
-      fileinput_text: "jsonファイルを読み込む"
-    };
+    Statistics,
+    ExpansionFileList
   },
   computed: {
     sortedFileData() {
@@ -133,8 +113,5 @@ export default {
   top: 0;
   left: 0;
   opacity: 0;
-}
-.all_file_wrapper {
-  padding-top: 80px;
 }
 </style>

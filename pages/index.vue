@@ -34,6 +34,11 @@
               >ファイル リストアップツール</nuxt-link
             >
           </li>
+          <li>
+            <nuxt-link to="./gaze_file"
+              >視線データ</nuxt-link
+            >
+          </li>
         </ul>
       </main>
     </div>

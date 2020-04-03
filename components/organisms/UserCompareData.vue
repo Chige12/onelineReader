@@ -19,7 +19,7 @@
                   <th class="text-left">読み順</th>
                   <th class="text-left">UI読み順</th>
                   <th class="text-left">平均読み時間</th>
-                  <th class="text-left">正確さ</th>
+                  <th class="text-left">注視回数</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,7 +27,7 @@
                   <td>{{ item.story }}</td>
                   <td>{{ item.ui }}</td>
                   <td>{{ item.avgTime }}</td>
-                  <td>{{ item.accuracy }}%</td>
+                  <td>{{ item.maxFixation }}</td>
                 </tr>
               </tbody>
             </template>
@@ -144,6 +144,9 @@ export default {
         usl_obj.ui = files[i].whiteout ? 'Oneline':'Scroll'
         usl_obj.avgTime = this.AvgTime(files[i])
         usl_obj.accuracy = this.AvgAccuracy(files[i])
+        if(files[i].maxFixation){
+          usl_obj.maxFixation = files[i].maxFixation
+        }
         usl.push(usl_obj)
       }
       return usl

@@ -35,6 +35,12 @@
               <v-list-item-content class="align-end">{{StoryAvgTime(story_key)}}</v-list-item-content>
             </v-list-item>
           </v-list>
+          <v-list dense>
+            <v-list-item>
+              <v-list-item-content>平均注視回数:</v-list-item-content>
+              <v-list-item-content class="align-end">{{StoryAvgFixation(story_key)}}</v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-card>
       </div>
     </v-container>
@@ -85,6 +91,21 @@ export default {
         all_file_time / all_word_count
       );
       return all_file_time / all_word_count ? allAvgTime : "---";
+    },
+    StoryAvgFixation(story_key) {
+      let one_story_files = this.StoryList()[story_key].files
+      return this.AvgFixation(one_story_files);
+    },
+    AvgFixation(files){
+      let avg_fix = 0
+      let avg_count = 0
+      for (let i = 0; i < files.length; i++) {
+        if(files[i].maxFixation){
+          avg_fix += files[i].maxFixation
+          avg_count++
+        }
+      }
+      return this.OrgFloor(avg_fix / avg_count,2) || '//'
     }
   }
 };

@@ -41,7 +41,7 @@ export const getters = { //computed
     });
     return unique_users;
   }
- }
+}
 
 export const mutations = {
   file_update (state,data) {
@@ -74,6 +74,40 @@ export const mutations = {
   },
   changeJudgeStyle(state){
     state.judge_style = state.judge_style === 'four' ? 'two' : 'four'
+  },
+  addGazeData(state,gaze_arr){
+    let newFile = [...state.file_data]
+    for (let i = 0; i < gaze_arr.length; i++) {
+      for (let j = 0; j < newFile.length; j++) {
+        if((newFile[j].story.id === `story_${gaze_arr[i].story}`)){
+          let userToUser = [
+            ['近藤亘','kondou'],
+            ['mandai yusuke','mandai yusuke'],
+            ['chaen','tyaen'],
+            ['西川　勇太','nisikawa yuuta'],
+            ['hosomi','hosomi'],
+            ['田渕 真輝','tabuti maki'],
+            ['藤本　祥','fujimoto sho'],
+            ['初田 玲音','hatuda leon'],
+            ['森田悟大',],
+            ['池山'],
+            ['薮内'],
+            ['西野修馬','nishinosyuma'],
+            ['中尾　翔也'],
+            ['藤原康太','fujiwara'],
+            ['西谷','nishitani'],
+            ['深瀬','fukase'],
+            ['奥村　誠','okumura']
+          ]
+          for (let k = 0; k < userToUser.length; k++) {
+            if(newFile[j].name === userToUser[k][0] && gaze_arr[i].author === userToUser[k][1]){
+              state.file_data[j].maxFixation = gaze_arr[i].maxFixation
+              break;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
