@@ -28,7 +28,7 @@
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@mdi/font": "^4.5.95",
     "@nuxtjs/vuetify": "^1.9.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "nodemon": "^2.0.0",
     "processmd": "^4.4.2",
     "sass-loader": "^8.0.0"
